@@ -1,0 +1,1893 @@
+--
+-- Create Schema Script 
+--   Database Version   : 11.2.0.2.0 
+--   TOAD Version       : 9.6.1.1 
+--   DB Connect String  : XE_PC 
+--   Schema             : DWHMON 
+--   Script Created by  : DWHMON 
+--   Script Created at  : 5/29/2013 2:42:40 PM 
+--   Physical Location  :  
+--   Notes              :  
+--
+
+-- Object Counts: 
+--   Functions: 11      Lines of Code: 114 
+--   Indexes: 16        Columns: 20         
+--   Materialized Views: 1 
+--   Procedures: 5      Lines of Code: 173 
+--   Refresh Groups: 1 
+--   Scheduler Jobs: 5 
+--   Sequences: 8 
+--   Tables: 27         Columns: 220        Constraints: 11     
+--   Views: 16          
+
+
+CREATE SEQUENCE DWHMON_USER_SEQ
+  START WITH 101
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER;
+
+
+CREATE SEQUENCE TEST_SEQ
+  START WITH 1
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER;
+
+
+CREATE SEQUENCE T_ABSENCE_HIS_SEQ
+  START WITH 101
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER;
+
+
+CREATE SEQUENCE T_ACT_HIS_SEQ
+  START WITH 19842
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER;
+
+
+CREATE SEQUENCE T_ISSUE_SEQ
+  START WITH 62
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER;
+
+
+CREATE SEQUENCE T_ITEMS_SEQ
+  START WITH 561
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER;
+
+
+CREATE SEQUENCE T_OVERTIME_HIS_SEQ
+  START WITH 201
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER;
+
+
+CREATE SEQUENCE T_WEEKLY_REP_SEQ
+  START WITH 161
+  MAXVALUE 999999999999999999999999999
+  MINVALUE 1
+  NOCYCLE
+  CACHE 20
+  NOORDER;
+
+
+CREATE TABLE T_ACT_HIS_REP_TEST
+(
+  ACT_DATE    VARCHAR2(30 BYTE)                 NOT NULL,
+  YEAR        VARCHAR2(16 BYTE),
+  MONTH_MM    VARCHAR2(8 BYTE),
+  MONTH_TXT   VARCHAR2(12 BYTE),
+  DAY_DD      VARCHAR2(8 BYTE),
+  DAY_TXT     VARCHAR2(36 BYTE),
+  GROUP_ID    NUMBER                            NOT NULL,
+  GROUP_NAME  VARCHAR2(300 BYTE),
+  JML_REP     NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE TEST_CHART_REP
+(
+  YYYYMMDD  VARCHAR2(10 BYTE),
+  JML_REP   NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE TEST_INDEX
+(
+  A  VARCHAR2(5 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE T_OVERTIME_HIS
+(
+  OBJID               NUMBER,
+  ABS2USER            NUMBER                    NOT NULL,
+  START_DATETIME      DATE                      NOT NULL,
+  END_DATETIME        DATE                      NOT NULL,
+  JUSTIFICATION_INFO  VARCHAR2(4000 BYTE)       NOT NULL,
+  DURATION_M          NUMBER,
+  STAT_APPROVED       NUMBER,
+  APPROVER2USER       NUMBER,
+  REJECT_INFO         VARCHAR2(1000 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE TOAD_PLAN_TABLE
+(
+  STATEMENT_ID       VARCHAR2(30 BYTE),
+  PLAN_ID            NUMBER,
+  TIMESTAMP          DATE,
+  REMARKS            VARCHAR2(4000 BYTE),
+  OPERATION          VARCHAR2(30 BYTE),
+  OPTIONS            VARCHAR2(255 BYTE),
+  OBJECT_NODE        VARCHAR2(128 BYTE),
+  OBJECT_OWNER       VARCHAR2(30 BYTE),
+  OBJECT_NAME        VARCHAR2(30 BYTE),
+  OBJECT_ALIAS       VARCHAR2(65 BYTE),
+  OBJECT_INSTANCE    INTEGER,
+  OBJECT_TYPE        VARCHAR2(30 BYTE),
+  OPTIMIZER          VARCHAR2(255 BYTE),
+  SEARCH_COLUMNS     NUMBER,
+  ID                 INTEGER,
+  PARENT_ID          INTEGER,
+  DEPTH              INTEGER,
+  POSITION           INTEGER,
+  COST               INTEGER,
+  CARDINALITY        INTEGER,
+  BYTES              INTEGER,
+  OTHER_TAG          VARCHAR2(255 BYTE),
+  PARTITION_START    VARCHAR2(255 BYTE),
+  PARTITION_STOP     VARCHAR2(255 BYTE),
+  PARTITION_ID       INTEGER,
+  OTHER              LONG,
+  DISTRIBUTION       VARCHAR2(30 BYTE),
+  CPU_COST           INTEGER,
+  IO_COST            INTEGER,
+  TEMP_SPACE         INTEGER,
+  ACCESS_PREDICATES  VARCHAR2(4000 BYTE),
+  FILTER_PREDICATES  VARCHAR2(4000 BYTE),
+  PROJECTION         VARCHAR2(4000 BYTE),
+  TIME               INTEGER,
+  QBLOCK_NAME        VARCHAR2(30 BYTE),
+  OTHER_XML          CLOB
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE T_ITEMTYPE
+(
+  OBJID      NUMBER                             NOT NULL,
+  TYPE_NAME  VARCHAR2(90 BYTE),
+  TYPE_DESC  VARCHAR2(300 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE T_ITEMS
+(
+  OBJID              NUMBER                     NOT NULL,
+  ITEMS_GROUPING     VARCHAR2(150 BYTE),
+  ITEMS_NAME         VARCHAR2(300 BYTE)         NOT NULL,
+  ITEMS2JOBCAT       NUMBER                     NOT NULL,
+  ITEMS2GROUP        NUMBER                     NOT NULL,
+  ITEMS2TYPE         NUMBER                     NOT NULL,
+  MACHINE_NAME       VARCHAR2(150 BYTE),
+  IP_ADDRESS         VARCHAR2(51 BYTE),
+  LOGIN_USER         VARCHAR2(150 BYTE),
+  LOGIN_PASS         VARCHAR2(150 BYTE),
+  SOURCE_PATH        VARCHAR2(300 BYTE),
+  SOURCE_FILENAME    VARCHAR2(150 BYTE),
+  DOC_STATUS         VARCHAR2(9 BYTE),
+  HANDOVER_DATE      DATE,
+  HANDOVER_PIC       VARCHAR2(30 BYTE),
+  LAUNCH_DATE        DATE,
+  SLA_TIME           VARCHAR2(24 BYTE),
+  STATUS_ITEMS       NUMBER,
+  SYS_CREATION_DATE  DATE,
+  TERMINATION_DATE   DATE,
+  ACT_SHOW_TIME      VARCHAR2(6 BYTE),
+  INORDER            NUMBER,
+  REPORT_DAY         NUMBER(1),
+  ITEM2GROUPUNIT     NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE T_ITEMGROUPUNIT_USER
+(
+  OBJID                NUMBER,
+  ITEMGROUP2USER       NUMBER,
+  ITEMGROUP2GROUPUNIT  NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE T_ITEMGROUPUNIT
+(
+  OBJID       NUMBER,
+  GROUP_NAME  VARCHAR2(300 BYTE),
+  GROUP_DESC  VARCHAR2(300 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE T_ITEMGROUP
+(
+  OBJID       NUMBER                            NOT NULL,
+  GROUP_NAME  VARCHAR2(300 BYTE),
+  GROUP_DESC  VARCHAR2(300 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE T_ITEMCAT
+(
+  OBJID     NUMBER                              NOT NULL,
+  CAT_NAME  VARCHAR2(60 BYTE),
+  CAT_DESC  VARCHAR2(300 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE T_ISSUE
+(
+  OBJID       NUMBER                            NOT NULL,
+  ISSUE_CODE  VARCHAR2(15 BYTE),
+  ISSUE_DESC  VARCHAR2(300 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE T_ACT_HIS
+(
+  OBJID             NUMBER                      NOT NULL,
+  ACT_DATE          VARCHAR2(30 BYTE)           NOT NULL,
+  ACT2ITEMS         NUMBER,
+  SEND_TIME         DATE,
+  LAST_UPDATE_TIME  DATE,
+  ACT2ACTSTATUS     NUMBER,
+  ACT2DWHMONUSER      NUMBER,
+  ACT_SLA_TARGET    DATE,
+  ACT_SLA_NOTIF     DATE,
+  ACT_NOTE          VARCHAR2(4000 BYTE),
+  ACT2ISSUE         NUMBER,
+  ACT_NOTIF         VARCHAR2(9 BYTE),
+  ACT_WEIGHT        NUMBER,
+  ACT_DATE_TIME     DATE,
+  REPORT_DATE       VARCHAR2(30 BYTE),
+  ACT_ITEMS_NAME    VARCHAR2(600 BYTE),
+  ADDL_INFO         VARCHAR2(4000 BYTE),
+  REF_TABLE         VARCHAR2(300 BYTE),
+  INORDER           NUMBER,
+  PICKUP_STAT       NUMBER,
+  DISMISSED_SLA     NUMBER,
+  CREATE_TIME       DATE,
+  WORK_STARTTIME    DATE,
+  REQUEST_DATETIME  DATE,
+  TICKET_NUMBER     VARCHAR2(15 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE T_ACTSTATUS
+(
+  OBJID        NUMBER                           NOT NULL,
+  STATUS_NAME  VARCHAR2(90 BYTE),
+  STATUS_DESC  VARCHAR2(300 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE T_ABSENCE_HIS
+(
+  OBJID         NUMBER,
+  ABS2USER      NUMBER,
+  ABS_DATE      VARCHAR2(10 BYTE),
+  IN_DATETIME   DATE,
+  OUT_DATETIME  DATE,
+  NOTES_OUT     VARCHAR2(4000 BYTE),
+  DURATION_INC  NUMBER,
+  DURATION_DEC  NUMBER,
+  DURATION_ALL  NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE DWHMON_VIEW_MENU
+(
+  ID             NUMBER,
+  NAME           VARCHAR2(150 BYTE),
+  URL            VARCHAR2(3000 BYTE),
+  URUTAN         NUMBER,
+  PARENT_MENU    NUMBER,
+  USER_LEVEL_ID  NUMBER,
+  MODUL          NUMBER,
+  USER_GROUP_ID  NUMBER,
+  LEAF           NUMBER,
+  STAT           NUMBER(1)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE DWHMON_USER_LEVEL
+(
+  ID          NUMBER                            NOT NULL,
+  LEVEL_NAME  VARCHAR2(30 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE DWHMON_USER_GROUP
+(
+  ID          NUMBER,
+  GROUP_NAME  VARCHAR2(150 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE DWHMON_USER
+(
+  ID                NUMBER                      NOT NULL,
+  USERNAME          VARCHAR2(45 BYTE),
+  PASSWORD          VARCHAR2(150 BYTE),
+  FIRST_NAME        VARCHAR2(300 BYTE),
+  LAST_NAME         VARCHAR2(300 BYTE),
+  EMP_ID            VARCHAR2(30 BYTE),
+  IP_ADDRESS        VARCHAR2(60 BYTE),
+  STAT_LOGIN        NUMBER,
+  LAST_LOGIN        DATE,
+  GROUP_ID          NUMBER,
+  LEVEL_ID          INTEGER,
+  CREATION_TIME     DATE,
+  CREATOR           VARCHAR2(60 BYTE),
+  EMAIL             VARCHAR2(300 BYTE),
+  FLAG              NUMBER,
+  NOTIFICATION_MSG  VARCHAR2(4000 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE DWHMON_PARAM
+(
+  ID     NUMBER,
+  NAME   VARCHAR2(75 BYTE),
+  VALUE  VARCHAR2(300 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE DWHMON_NOTIFICATION
+(
+  GROUP_ID  NUMBER,
+  STATUS    NUMBER,
+  MESSAGE   VARCHAR2(4000 BYTE),
+  LEVEL_ID  NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE DWHMON_MODULE
+(
+  ID    NUMBER,
+  NAME  VARCHAR2(60 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE T_HOUR_INTERVAL
+(
+  H_CODE   VARCHAR2(2 BYTE),
+  H_START  VARCHAR2(10 BYTE),
+  H_END    VARCHAR2(10 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE TOAD_PLAN_SQL
+(
+  USERNAME      VARCHAR2(30 BYTE),
+  STATEMENT_ID  VARCHAR2(32 BYTE),
+  TIMESTAMP     DATE,
+  STATEMENT     VARCHAR2(2000 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE T_ACT_HIS_WEEKLY_REP
+(
+  ID       INTEGER,
+  WEEK1    VARCHAR2(30 BYTE),
+  WEEK2    VARCHAR2(30 BYTE),
+  JML_REP  NUMBER
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE TABLE T_ACT_HIS_DONE
+(
+  OBJID             NUMBER                      NOT NULL,
+  ACT_DATE          VARCHAR2(30 BYTE)           NOT NULL,
+  ACT2ITEMS         NUMBER,
+  SEND_TIME         DATE,
+  LAST_UPDATE_TIME  DATE,
+  ACT2ACTSTATUS     NUMBER,
+  ACT2DWHMONUSER      NUMBER,
+  ACT_SLA_TARGET    DATE,
+  ACT_SLA_NOTIF     DATE,
+  ACT_NOTE          VARCHAR2(4000 BYTE),
+  ACT2ISSUE         NUMBER,
+  ACT_NOTIF         VARCHAR2(9 BYTE),
+  ACT_WEIGHT        NUMBER,
+  ACT_DATE_TIME     DATE,
+  REPORT_DATE       VARCHAR2(30 BYTE),
+  ACT_ITEMS_NAME    VARCHAR2(600 BYTE),
+  ADDL_INFO         VARCHAR2(4000 BYTE),
+  REF_TABLE         VARCHAR2(300 BYTE),
+  INORDER           NUMBER,
+  PICKUP_STAT       NUMBER,
+  DISMISSED_SLA     NUMBER,
+  CREATE_TIME       DATE,
+  WORK_STARTTIME    DATE,
+  REQUEST_DATETIME  DATE,
+  TICKET_NUMBER     VARCHAR2(15 BYTE)
+)
+LOGGING 
+NOCOMPRESS 
+NOCACHE
+NOPARALLEL
+MONITORING;
+
+
+CREATE UNIQUE INDEX T_ITEMTYPE_PK ON T_ITEMTYPE
+(OBJID)
+LOGGING
+NOPARALLEL;
+
+
+CREATE UNIQUE INDEX T_HOUR_INTERVAL_PK ON T_HOUR_INTERVAL
+(H_CODE)
+LOGGING
+NOPARALLEL;
+
+
+CREATE UNIQUE INDEX T_OVERTIME_HIS_PK ON T_OVERTIME_HIS
+(OBJID)
+LOGGING
+NOPARALLEL;
+
+
+CREATE INDEX IDX_T_ACT_HIS_DONE ON T_ACT_HIS_DONE
+(ACT_DATE, ACT2ACTSTATUS)
+LOGGING
+NOPARALLEL;
+
+
+CREATE UNIQUE INDEX T_ACTSTATUS_PK ON T_ACTSTATUS
+(OBJID)
+LOGGING
+NOPARALLEL;
+
+
+CREATE UNIQUE INDEX T_ITEMGROUP_PK ON T_ITEMGROUP
+(OBJID)
+LOGGING
+NOPARALLEL;
+
+
+CREATE INDEX IDX_T_ACT_HIS ON T_ACT_HIS
+(ACT_DATE, ACT2ACTSTATUS)
+LOGGING
+NOPARALLEL;
+
+
+CREATE UNIQUE INDEX T_ACT_HIS_PK ON T_ACT_HIS
+(OBJID)
+LOGGING
+NOPARALLEL;
+
+
+CREATE UNIQUE INDEX TPSQL_IDX ON TOAD_PLAN_SQL
+(STATEMENT_ID)
+LOGGING
+NOPARALLEL;
+
+
+CREATE INDEX IDX_TEST_INDEX ON TEST_INDEX
+(A)
+LOGGING
+NOPARALLEL;
+
+
+CREATE UNIQUE INDEX T_ITEMS_PK ON T_ITEMS
+(OBJID)
+LOGGING
+NOPARALLEL;
+
+
+CREATE INDEX IDX_T_ITEMS ON T_ITEMS
+(ITEMS_GROUPING, ITEMS2TYPE, ITEM2GROUPUNIT)
+LOGGING
+NOPARALLEL;
+
+
+CREATE OR REPLACE PROCEDURE      set_act_daily (
+   tgl      IN   DATE,
+   ntfday   IN   NUMBER,
+   ntfmin   IN   NUMBER
+)
+IS
+/*   set_act_daily(sysdate,0,15); */
+
+   tgl_act      VARCHAR2 (10);
+   tgl_act_dd   VARCHAR2 (2);
+BEGIN
+   tgl_act := TO_CHAR (tgl, 'YYYYMMDD');
+   tgl_act_dd := TO_CHAR (tgl, 'DD');
+
+   DELETE FROM t_act_his
+         WHERE act_date = tgl_act and act2items in
+         (select a.objid FROM t_items a where a.items2jobcat in (1,2) and a.status_items = 1 and launch_date<=sysdate);
+
+   COMMIT;
+
+   FOR x IN (SELECT a.objid, items_name, cat_name, group_name, type_name,
+                    act_show_time, sla_time, status_items,report_day,inorder
+               FROM t_items a LEFT JOIN t_itemcat b ON a.items2jobcat =
+                                                                      b.objid
+                    JOIN t_itemgroup c ON a.items2group = c.objid
+                    JOIN t_itemtype d ON a.items2type = d.objid
+              WHERE a.status_items = 1 and launch_date<=sysdate )
+   LOOP
+   
+   
+   dbms_output.put_line(x.sla_time);
+
+      IF (x.cat_name = 'Daily')
+      THEN
+        
+         INSERT INTO t_act_his
+                     (objid, act_date, act2items,act_items_name, send_time,
+                      last_update_time, act2actstatus, act2DWHMONuser,
+                      act_sla_target,
+                      act_sla_notif,act_date_time,report_date,inorder,pickup_stat,dismissed_sla,create_time,work_starttime,request_datetime
+                     )
+              VALUES (t_act_his_seq.NEXTVAL, tgl_act, x.objid,
+                      case when x.report_day=0 then x.items_name else x.items_name||' ('||to_char(to_date(to_date(tgl_act,'YYYYMMDD')-x.report_day),'YYYYMMDD')||') ' end,
+                      NULL,
+                      SYSDATE, 1, NULL,
+                      case when x.sla_time is not null then TO_DATE (tgl_act || ' ' || x.sla_time || ':00:00','YYYYMMDD HH24:MI:SS') end,
+                      case when x.sla_time is not null then TO_DATE (tgl_act || ' ' || x.sla_time || ':00:00','YYYYMMDD HH24:MI:SS')- ((ntfmin * 60) / (24 * 60 * 60)) end,
+                      case when x.act_show_time is not null then TO_DATE (tgl_act || ' ' || x.act_show_time || ':00:00','YYYYMMDD HH24:MI:SS') end,
+                      to_char(to_date(to_date(tgl_act,'YYYYMMDD')-x.report_day),'YYYYMMDD'),x.inorder,0,0,sysdate,
+                      case when x.act_show_time is not null then TO_DATE (tgl_act || ' ' || x.act_show_time || ':00:00','YYYYMMDD HH24:MI:SS') end,
+                      case when x.act_show_time is not null then TO_DATE (tgl_act || ' ' || x.act_show_time || ':00:00','YYYYMMDD HH24:MI:SS') end  );
+         COMMIT;
+      ELSIF (x.cat_name = 'Monthly'  )
+      THEN
+      
+      dbms_output.put_line(x.act_show_time||'  '||tgl_act_dd);
+        
+       IF (to_char(to_date(x.act_show_time,'DD'),'DD') = tgl_act_dd)
+         THEN
+            INSERT INTO t_act_his
+                        (objid, act_date, act2items,act_items_name, send_time,
+                         last_update_time, act2actstatus, act2DWHMONuser,
+                         act_sla_target,
+                         act_sla_notif,act_date_time,inorder,pickup_stat,dismissed_sla,create_time,work_starttime,request_datetime
+                        )
+                 VALUES (t_act_his_seq.NEXTVAL, tgl_act, x.objid,
+                 case when x.report_day=0 then x.items_name 
+                      else x.items_name||' ('||to_char(to_date(to_date(tgl_act,'YYYYMMDD')-x.report_day),'YYYYMMDD')||') ' end, 
+                        NULL,
+                        SYSDATE, 1, NULL,
+                        case when x.sla_time is not null then TO_DATE (   TO_CHAR (SYSDATE, 'YYYYMM')||tgl_act_dd|| ' 23:59:59','YYYYMMDD HH24:MI:SS')+x.sla_time end,
+                        case when x.sla_time is not null then  TO_DATE (   TO_CHAR (SYSDATE, 'YYYYMM')||tgl_act_dd|| ' 13:00:00','YYYYMMDD HH24:MI:SS')+x.sla_time- ntfday end,
+                        case when x.act_show_time is not null then TO_DATE (TO_CHAR (SYSDATE, 'YYYYMM')||tgl_act_dd || ' 08:00:00','YYYYMMDD HH24:MI:SS') end,
+                        x.inorder,0,0,sysdate,
+                        case when x.act_show_time is not null then TO_DATE (TO_CHAR (SYSDATE, 'YYYYMM')||tgl_act_dd || ' 08:00:00','YYYYMMDD HH24:MI:SS') end,
+                        case when x.act_show_time is not null then TO_DATE (TO_CHAR (SYSDATE, 'YYYYMM')||tgl_act_dd || ' 08:00:00','YYYYMMDD HH24:MI:SS') end  );
+
+            COMMIT;
+         END IF;
+         
+         
+      END IF;
+
+      COMMIT;
+      
+   
+   END LOOP;
+END;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE procedure refresh_attendance IS
+query varchar2(100);
+begin
+
+query:='update T_ABSENCE_HIS set OUT_DATETIME=TO_DATE(TO_CHAR(SYSDATE,''YYYYMMDD'')||''010000'',''YYYYMMDDHH24MISS'') where ABS_DATE=TO_CHAR(SYSDATE-1,''YYYYMMDD'')';
+
+execute immediate query;
+
+commit;
+
+end;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE procedure      backup_activity_daily is
+begin
+
+-- backup yang udah done atau not sent saja
+
+insert into t_act_his_done
+select * from t_act_his where to_date(act_date,'YYYYMMDD')<=sysdate-100 and ACT2ACTSTATUS in (4,6);
+
+commit;
+
+end;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE PROCEDURE send_mail (p_to        IN VARCHAR2,
+                                       p_from      IN VARCHAR2,
+                                       p_message   IN VARCHAR2,
+                                       p_smtp_host IN VARCHAR2,
+                                       p_smtp_port IN NUMBER DEFAULT 25)
+AS
+  l_mail_conn   UTL_SMTP.connection;
+BEGIN
+  l_mail_conn := UTL_SMTP.open_connection(p_smtp_host, p_smtp_port);
+  UTL_SMTP.helo(l_mail_conn, p_smtp_host);
+  UTL_SMTP.mail(l_mail_conn, p_from);
+  UTL_SMTP.rcpt(l_mail_conn, p_to);
+  UTL_SMTP.data(l_mail_conn, p_message || UTL_TCP.crlf || UTL_TCP.crlf);
+  UTL_SMTP.quit(l_mail_conn);
+END;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE PROCEDURE      set_notif
+IS
+   vmsg   VARCHAR2 (4000);
+   vmsg_info VARCHAR2 (4000);
+   i number;
+BEGIN
+
+   FOR x IN (SELECT to_char(sysdate-1,'YYYY/MM/DD') DAY,ID, username, first_name, last_name, emp_id, GROUP_ID, LEVEL_ID
+               FROM DWHMON_user
+              WHERE flag = 1)
+   LOOP
+
+      vmsg:='Hi '||x.first_name||' '||x.last_name||', ';
+      
+      IF x.GROUP_ID=1 and (x.LEVEL_ID=1 or x.LEVEL_ID=2) THEN  
+      -- add status pending activity for level 1 and 2 (officer)
+      i:=0;
+       for y in (select status_name,count(1) JML
+       from t_act_his a,t_actstatus b 
+       where a.act2actstatus=b.objid and a.ACT2DWHMONUSER=x.id and a.act2actstatus not in (4,6)
+       group by status_name) LOOP
+       
+       if i=0 then
+       vmsg:=vmsg||' Status Activities '||x.day||' :'||' ('||y.JML||':'||y.status_name||') ';
+       else
+       vmsg:=vmsg||' ('||y.JML||':'||y.status_name||') ';
+       end if;
+       
+       i:=i+1;
+       END LOOP;
+       
+       if i=0 then
+        vmsg:=vmsg||' Status Activities '||x.day||' :'||' (No Pending Act) ';
+       end if;
+       
+      else
+      i:=0;
+      vmsg:=vmsg||' Welcome back :).  ';
+      
+      end if;
+      
+      
+      EXECUTE IMMEDIATE ' update DWHMON_user set notification_msg='''||vmsg||''' where id='||x.id||' ';
+
+      COMMIT;
+      
+   END LOOP;
+END;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE FUNCTION      md5hash (v_input_string in varchar2) return varchar2     
+is
+   v_checksum varchar2(100);
+   begin
+   v_checksum := dbms_obfuscation_toolkit.md5 (input_string => v_input_string);
+   select TRIM(UPPER(rawtohex(v_checksum))) into  v_checksum from dual;
+   
+   return v_checksum;
+end;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE function get_t_actstatus_name(s_id in number)  return varchar2 is
+stat_name t_actstatus.status_name%TYPE;
+begin
+
+select status_name into stat_name from t_actstatus where objid=s_id;
+
+return stat_name;
+
+end;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE function get_t_actstatus_byid(s_id in number)  return varchar2 is
+stat_name t_actstatus.status_name%TYPE;
+begin
+
+select status_name into stat_name from t_actstatus where objid=s_id;
+
+return stat_name;
+
+end;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE function get_t_actstatus_byname(stat_name in t_actstatus.status_name%TYPE)  return number is
+s_id t_actstatus.objid%TYPE;
+begin
+
+select objid into s_id from t_actstatus where status_name=stat_name;
+
+return s_id;
+
+end;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE function get_param(nama IN varchar2) return varchar2
+IS
+v_value varchar2(300):=0;
+BEGIN
+
+select VALUE into v_value from DWHMON_PARAM where NAME=nama;
+
+return v_value;
+
+END;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE function get_idle_count_attendance() return varchar2
+IS
+v_value varchar2(300):=0;
+BEGIN
+select VALUE into v_value from DWHMON_PARAM where NAME='idle_count_attendance'
+END
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE function get_performance_attendance(IN_DATETIME IN DATE,OUT_DATETIME IN DATE) return varchar2
+IS
+v_value varchar2(300):=0;
+BEGIN
+
+select case when ((OUT_DATETIME-IN_DATETIME)*60*60*24)<=(60*60*9) then 0 
+when ((OUT_DATETIME-IN_DATETIME)*60*60*24)>(60*60*9) and ((OUT_DATETIME-IN_DATETIME)*60*60*24)<=(60*60*9)+(60*60*to_number(get_param('idle_count_attendance'))) then 0   
+when (((OUT_DATETIME-IN_DATETIME)*60*60*24)-(60*60*(9+to_number(get_param('idle_count_attendance')))))>(60*60*9) then (60*60*9) 
+else ((OUT_DATETIME-IN_DATETIME)*60*60*24)-(60*60*(9+to_number(get_param('idle_count_attendance')))) end VALUE into v_value
+from dual;
+
+return v_value;
+
+END;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE function get_performance_OUT(IN_DATETIME IN DATE,OUT_DATETIME IN DATE) return varchar2
+IS
+v_value varchar2(300):=0;
+BEGIN
+
+select case when ((OUT_DATETIME-IN_DATETIME)*60*60*24)<=(60*60*9) then 0 
+when ((OUT_DATETIME-IN_DATETIME)*60*60*24)>(60*60*9) and ((OUT_DATETIME-IN_DATETIME)*60*60*24)<=(60*60*9)+(60*60*to_number(get_param('idle_count_attendance'))) then 0   
+when (((OUT_DATETIME-IN_DATETIME)*60*60*24)-(60*60*(9+to_number(get_param('idle_count_attendance')))))>(60*60*9) then (60*60*9) 
+else ((OUT_DATETIME-IN_DATETIME)*60*60*24)-(60*60*(9+to_number(get_param('idle_count_attendance')))) end VALUE into v_value
+from dual;
+
+return v_value;
+
+END;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE function      get_dur_attendance_in(IN_DATETIME IN DATE,OUT_DATETIME IN DATE) return varchar2
+IS
+v_value varchar2(300):=0;
+BEGIN
+
+v_value:=case when ((OUT_DATETIME-IN_DATETIME)*60*60*24)>(60*60*9) then (60*60*9) else((OUT_DATETIME-IN_DATETIME)*60*60*24) end;
+
+return v_value;
+
+END;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE function      get_dur_attendance_out(IN_DATETIME IN DATE,OUT_DATETIME IN DATE) return varchar2
+IS
+v_value varchar2(300):=0;
+BEGIN
+
+v_value:=case when ((OUT_DATETIME-IN_DATETIME)*60*60*24)<=(60*60*9) then 0 
+when ((OUT_DATETIME-IN_DATETIME)*60*60*24)>(60*60*9) and ((OUT_DATETIME-IN_DATETIME)*60*60*24)<=(60*60*9)+(60*60*to_number(get_param('idle_count_attendance'))) then 0   
+when (((OUT_DATETIME-IN_DATETIME)*60*60*24)-(60*60*(9+to_number(get_param('idle_count_attendance')))))>(60*60*9) then (60*60*9) 
+else ((OUT_DATETIME-IN_DATETIME)*60*60*24)-(60*60*(9+to_number(get_param('idle_count_attendance')))) end;
+
+
+return v_value;
+
+END;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE function get_item_name(ID IN number) return varchar2
+IS
+v_value varchar2(300):=0;
+BEGIN
+
+select ITEMS_NAME into v_value from T_ITEMS where OBJID=ID;
+
+return v_value;
+
+END;
+/
+
+SHOW ERRORS;
+
+
+CREATE OR REPLACE VIEW LOGIN_INFO
+AS 
+SELECT b.username, NVL (b.first_name, ' ') first_name,
+          NVL (b.last_name, ' ') last_name, b.emp_id, c.group_name,
+          d.level_name, nvl(b.ip_address,' ') IP_ADDRESS,
+          TO_CHAR (b.last_login, 'YYYY/MM/DD HH24:MI:SS') last_login,
+          TO_CHAR (b.last_login, 'YYYY/MM/DD') last_login_date,
+          TO_CHAR (SYSDATE, 'YYYY/MM/DD') today
+     FROM DWHMON_user b, DWHMON_user_group c, DWHMON_user_level d
+    WHERE b.GROUP_ID = c.ID AND b.level_id = d.ID AND b.flag = 1;
+
+
+CREATE OR REPLACE VIEW V_ACT_DAILY
+AS 
+SELECT   t.objid, TO_CHAR (t.act_date_time, 'YYYY/MM/DD HH24:MI:SS') show,
+            TO_CHAR (TO_DATE (t.act_date, 'YYYYMMDD'), 'YYYY/MM/DD') act_date,
+            t.act_items_name, a.items_name, report_date, b.objid cat_id,
+            b.cat_name, c.group_name, c.objid GROUP_ID, d.type_name,
+            TO_CHAR (t.send_time, 'YYYY/MM/DD HH24:MI:SS') send_time,
+            CASE
+               WHEN t.act_sla_target IS NOT NULL
+                  THEN TO_CHAR (t.act_sla_target,
+                                'YYYY/MM/DD HH24:MI:SS'
+                               )
+               ELSE 'NO SLA'
+            END act_sla_target,
+            TO_CHAR (t.act_sla_notif, 'YYYY/MM/DD HH24:MI:SS') act_sla_notif,
+            u.username, t.act2DWHMONuser user_id,
+            (CASE
+                --WHEN t.dismissed_sla = 1 AND t.act_sla_target IS NOT NULL
+                --   THEN 'green'
+                WHEN t.act_sla_notif > SYSDATE
+                 OR t.send_time <= t.act_sla_target
+                   THEN 'green'
+                WHEN t.act_sla_notif <= SYSDATE AND t.act_sla_target > SYSDATE
+                   THEN 'yellow'
+                WHEN (    t.act_sla_notif <= SYSDATE
+                      AND t.act_sla_target <= SYSDATE
+                     )
+                 OR (t.send_time > t.act_sla_target)
+                   THEN 'red'
+                ELSE 'NO SLA'
+             END
+            ) status_sla,
+            s.objid status_id, status_name, issue_code, issue_desc, act_note,
+            a.item2groupunit, t.pickup_stat, t.dismissed_sla, t.addl_info,
+            TO_CHAR (t.work_starttime,
+                     'YYYY/MM/DD HH24:MI:SS') work_starttime,
+            TO_CHAR (t.request_datetime,
+                     'YYYY/MM/DD HH24:MI:SS'
+                    ) request_datetime,
+            a.machine_name, a.ip_address, a.login_user, a.login_pass,
+            a.source_path, a.source_filename,
+            TO_CHAR (a.handover_date, 'YYYY/MM/DD HH24:MI:SS'),
+            a.handover_pic, TO_CHAR (a.launch_date, 'YYYY/MM/DD HH24:MI:SS'),
+            t.ticket_number
+       FROM t_act_his t LEFT JOIN t_items a ON t.act2items = a.objid
+            LEFT JOIN t_itemcat b ON a.items2jobcat = b.objid
+            LEFT JOIN t_itemgroup c ON a.items2group = c.objid
+            LEFT JOIN t_itemtype d ON a.items2type = d.objid
+            LEFT JOIN DWHMON_user u ON t.act2DWHMONuser = u.ID
+            LEFT JOIN t_actstatus s ON t.act2actstatus = s.objid
+            LEFT JOIN t_issue i ON t.act2issue = i.objid
+   --WHERE a.status_items = 1                    --AND (t.act2actstatus <> 4)
+   ORDER BY t.act_date, b.cat_name, c.group_name, t.inorder, t.act_items_name;
+
+
+CREATE OR REPLACE VIEW V_ACT_DAILY_NEARSLA
+AS 
+select t.objid,t.act_date,a.items_name,b.cat_name,c.group_name,d.type_name,to_char(t.send_time,'YYYY/MM/DD HH24:MI:SS') send_time,
+to_char(t.act_sla_target,'YYYY/MM/DD HH24:MI:SS') act_sla_target,to_char(t.act_sla_notif,'YYYY/MM/DD HH24:MI:SS') act_sla_notif,
+u.username
+ from t_act_his t
+ left join t_items a on t.act2items=a.objid 
+ left join t_itemcat b on a.ITEMS2JOBCAT=b.objid 
+ left join t_itemgroup c on a.ITEMS2GROUP=c.objid
+ left join t_itemtype d on A.ITEMS2TYPE=d.objid
+ left join DWHMON_user u on t.act2DWHMONuser=u.id
+ where a.status_items=1 and act_date=to_char(sysdate,'YYYYMMDD') and act_sla_notif<=sysdate and send_time is null 
+ order by group_name,items_name;
+
+
+CREATE OR REPLACE VIEW V_ACT_DAILY_QUEUE
+AS 
+SELECT   t.objid, t.act_date, a.items_name, b.cat_name, c.group_name,
+            d.type_name,
+            TO_CHAR (t.send_time, 'YYYY/MM/DD HH24:MI:SS') send_time,
+            TO_CHAR (t.act_sla_target,
+                     'YYYY/MM/DD HH24:MI:SS') act_sla_target,
+            TO_CHAR (t.act_sla_notif, 'YYYY/MM/DD HH24:MI:SS') act_sla_notif,
+            u.username,
+            (CASE
+                WHEN t.act_sla_notif > SYSDATE
+                   THEN 'green'
+                WHEN t.act_sla_notif <= SYSDATE AND t.act_sla_target > SYSDATE
+                   THEN 'yellow'
+                WHEN t.act_sla_notif <= SYSDATE
+                     AND t.act_sla_target <= SYSDATE
+                   THEN 'red'
+                ELSE 'undefined'
+             END
+            ) status_sla,
+            status_name,
+            issue_code,
+            issue_desc
+       FROM t_act_his t LEFT JOIN t_items a ON t.act2items = a.objid
+            LEFT JOIN t_itemcat b ON a.items2jobcat = b.objid
+            LEFT JOIN t_itemgroup c ON a.items2group = c.objid
+            LEFT JOIN t_itemtype d ON a.items2type = d.objid
+            LEFT JOIN DWHMON_user u ON t.act2DWHMONuser = u.ID
+            LEFT JOIN t_actstatus s ON t.act2actstatus=s.objid
+            LEFT JOIN t_issue i ON t.act2issue=i.objid
+      WHERE a.status_items = 1 and s.status_name not in ('Done','Not Sent')
+   ORDER BY group_name, items_name;
+
+
+CREATE OR REPLACE VIEW V_ATTENDANCE_1D
+AS 
+SELECT   a.abs2user, b.username, b.first_name, b.last_name, b.emp_id,
+            c.group_name, d.level_name,
+            TO_CHAR (MAX (a.in_datetime),
+                     'YYYY/MM/DD HH24:MI:SS') in_datetime,
+            TO_CHAR (MAX (a.out_datetime),
+                     'YYYY/MM/DD HH24:MI:SS'
+                    ) out_datetime,
+            SUM (duration_all) dur_m_all,
+            ROUND (SUM (((SYSDATE - in_datetime)) * 60 * 60 * 24) / (60 * 60),
+                   2
+                  ) dur_h_realtime,
+            ROUND (SUM (duration_all) / (60 * 60), 2) dur_h_all,
+            SUM (duration_inc) dur_m_inc,
+            ROUND (SUM (duration_inc) / (60 * 60), 2) dur_h_inc,
+            SUM (duration_dec) dur_m_dec,
+            ROUND (SUM (duration_dec) / (60 * 60), 2) dur_h_dec,
+            ROUND (SUM (duration_inc) / (COUNT (1) * 9 * 60 * 60) * 100,
+                   2
+                  ) percent_ori,
+            SUM (duration_inc - duration_dec) dur_final,
+            ROUND
+               (  SUM (  duration_inc
+                       - duration_dec
+                      )
+                / (COUNT (1) * 9 * 60 * 60)
+                * 100,
+                2
+               ) percent_final,
+            CASE
+               WHEN ROUND (  SUM (duration_inc - duration_dec)
+                           / (COUNT (1) * 9 * 60 * 60)
+                           * 100,
+                           2
+                          ) <= 50
+                  THEN 'LOW'
+               WHEN ROUND (  SUM (duration_inc - duration_dec)
+                           / (COUNT (1) * 9 * 60 * 60)
+                           * 100,
+                           2
+                          ) > 50
+               AND ROUND (  SUM (duration_inc - duration_dec)
+                          / (COUNT (1) * 9 * 60 * 60)
+                          * 100,
+                          2
+                         ) <= 79
+                  THEN 'MEDIUM'
+               WHEN ROUND (  SUM (duration_inc - duration_dec)
+                           / (COUNT (1) * 9 * 60 * 60)
+                           * 100,
+                           2
+                          ) > 79
+               AND ROUND (  SUM (duration_inc - duration_dec)
+                          / (COUNT (1) * 9 * 60 * 60)
+                          * 100,
+                          2
+                         ) <= 98
+                  THEN 'GOOD'
+               ELSE 'PERFECT'
+            END stat
+       FROM t_absence_his a, DWHMON_user b, DWHMON_user_group c,
+            DWHMON_user_level d
+      WHERE a.abs2user = b.ID
+        AND b.GROUP_ID = c.ID
+        AND b.level_id = d.ID
+        AND b.flag = 1
+        AND abs_date = TO_CHAR (SYSDATE, 'YYYYMMDD')
+   GROUP BY a.abs2user,
+            b.username,
+            b.first_name,
+            b.last_name,
+            b.emp_id,
+            c.group_name,
+            d.level_name;
+
+
+CREATE OR REPLACE VIEW V_ATTENDANCE_30D
+AS 
+SELECT   a.abs2user, b.username, b.first_name, b.last_name, b.emp_id,
+            c.group_name, d.level_name,
+            TO_CHAR (MAX (a.in_datetime),
+                     'YYYY/MM/DD HH24:MI:SS') in_datetime,
+            TO_CHAR (MAX (a.out_datetime),
+                     'YYYY/MM/DD HH24:MI:SS'
+                    ) out_datetime,
+            SUM (duration_all) dur_m_all,
+            ROUND (SUM (duration_all) / (60 * 60), 2) dur_h_all,
+            SUM (duration_inc) dur_m_inc,
+            ROUND (SUM (duration_inc) / (60 * 60), 2) dur_h_inc,
+            SUM (duration_dec) dur_m_dec,
+            ROUND (SUM (duration_dec) / (60 * 60), 2) dur_h_dec,
+            ROUND (SUM (duration_inc) / (COUNT (1) * 9 * 60 * 60) * 100,
+                   2
+                  ) percent_ori,
+            SUM (duration_inc - duration_dec) dur_final,
+            ROUND (  SUM (duration_inc - duration_dec)
+                   / (COUNT (1) * 9 * 60 * 60)
+                   * 100,
+                   2
+                  ) percent_final,
+            CASE
+               WHEN ROUND (  SUM (duration_inc - duration_dec)
+                           / (COUNT (1) * 9 * 60 * 60)
+                           * 100,
+                           2
+                          ) <= 50
+                  THEN 'LOW'
+               WHEN ROUND (  SUM (duration_inc - duration_dec)
+                           / (COUNT (1) * 9 * 60 * 60)
+                           * 100,
+                           2
+                          ) > 50
+               AND ROUND (  SUM (duration_inc - duration_dec)
+                          / (COUNT (1) * 9 * 60 * 60)
+                          * 100,
+                          2
+                         ) <= 79
+                  THEN 'MEDIUM'
+               WHEN ROUND (  SUM (duration_inc - duration_dec)
+                           / (COUNT (1) * 9 * 60 * 60)
+                           * 100,
+                           2
+                          ) > 79
+               AND ROUND (  SUM (duration_inc - duration_dec)
+                          / (COUNT (1) * 9 * 60 * 60)
+                          * 100,
+                          2
+                         ) <= 98
+                  THEN 'GOOD'
+               ELSE 'PERFECT'
+            END stat
+       FROM t_absence_his a, DWHMON_user b, DWHMON_user_group c,
+            DWHMON_user_level d
+      WHERE a.abs2user = b.ID
+        AND b.GROUP_ID = c.ID
+        AND b.level_id = d.ID
+        AND b.flag = 1
+        AND out_datetime IS NOT NULL
+        AND abs_date BETWEEN TO_CHAR (SYSDATE - 31, 'YYYYMMDD')
+                         AND TO_CHAR (SYSDATE - 1, 'YYYYMMDD') 
+   GROUP BY a.abs2user,
+            b.username,
+            b.first_name,
+            b.last_name,
+            b.emp_id,
+            c.group_name,
+            d.level_name
+   ORDER BY percent_final DESC, in_datetime ASC, b.username ASC;
+
+
+CREATE OR REPLACE VIEW V_ATTENDANCE_REALTIMEPOIN
+AS 
+SELECT   a.abs2user, b.username, b.first_name, b.last_name, b.emp_id,
+            c.group_name, d.level_name,
+            TO_CHAR (MAX (a.in_datetime),
+                     'YYYY/MM/DD HH24:MI:SS') in_datetime,
+            sysdate out_datetime,
+            ROUND (SUM (((SYSDATE - in_datetime)) * 60 * 60 * 24) / (60 * 60),
+                   2
+                  ) dur_h_realtime,
+                  to_number(get_dur_performance_in(in_datetime,sysdate)) DUR_IN,
+                  to_number(get_dur_performance_out(in_datetime,sysdate)) DUR_OUT,
+            ROUND
+               (  SUM (  to_number(get_dur_performance_in(in_datetime,sysdate))
+                       - to_number(get_dur_performance_out(in_datetime,sysdate))
+                      )
+                / (COUNT (1) * 9 * 60 * 60)
+                * 100,
+                2
+               ) percent_final
+       FROM t_absence_his a, DWHMON_user b, DWHMON_user_group c,
+            DWHMON_user_level d
+      WHERE a.abs2user = b.ID
+        AND b.GROUP_ID = c.ID
+        AND b.level_id = d.ID
+        AND b.flag = 1
+        AND abs_date = TO_CHAR (SYSDATE, 'YYYYMMDD')
+   GROUP BY a.abs2user,
+            b.username,
+            b.first_name,
+            b.last_name,
+            b.emp_id,
+            c.group_name,
+            d.level_name,
+            to_number(get_dur_performance_in(in_datetime,sysdate)),
+            to_number(get_dur_performance_out(in_datetime,sysdate))
+            order by  percent_final desc;
+
+
+CREATE OR REPLACE VIEW V_BHD_REP_SUMMARY
+AS 
+SELECT DAY, TRIM (tag1) tag1, TRIM (tag2) tag2, tag3, total, total_d1,
+          total_d2, total_d3, total_d4, RANK
+     FROM (SELECT DAY, tag1, tag2, tag3, total, total_d1,total_d2,total_d3,
+                  total_d4,
+                  RANK
+             FROM (
+             SELECT   DAY, tag1, tag2, tag3, NVL (total, 0) total,
+                            LAG (NVL (total, 0), 1) OVER (PARTITION BY    tag1
+                                                                       || tag2
+                                                                       || tag3 ORDER BY DAY)
+                                                                     total_d1,
+                            LAG (NVL (total, 0), 2) OVER (PARTITION BY    tag1
+                                                                       || tag2
+                                                                       || tag3 ORDER BY DAY)
+                                                                     total_d2,
+                            LAG (NVL (total, 0), 3) OVER (PARTITION BY    tag1
+                                                                       || tag2
+                                                                       || tag3 ORDER BY DAY)
+                                                                     total_d3,
+                            LAG (NVL (total, 0), 4) OVER (PARTITION BY    tag1
+                                                                       || tag2
+                                                                       || tag3 ORDER BY DAY)
+                                                                     total_d4,
+                            RANK
+                       FROM bhd_rep_summary_agg    
+                   ORDER BY DAY DESC, tag1 ASC));
+
+
+CREATE OR REPLACE VIEW V_GROUPING_LABEL
+AS 
+SELECT   c.type_name, d.group_name, b.items_grouping,e.cat_name
+       FROM t_items b, t_itemtype c, t_itemgroup d,t_itemcat e
+      WHERE b.items2type = c.objid
+        AND b.items2group = d.objid
+        AND b.ITEMS2JOBCAT = e.objid
+        --AND c.type_name = 'Report'
+        --AND d.group_name = 'Daily Outgoing Usage'
+        AND b.status_items = 1
+   GROUP BY c.type_name, d.group_name, b.items_grouping, e.cat_name
+   ORDER BY b.items_grouping DESC;
+
+
+CREATE OR REPLACE VIEW V_GROUPUNITUSER
+AS 
+select a.objid,a.itemgroup2user,b.username,a.itemgroup2groupunit,c.group_name 
+       from t_itemgroupunit_user a 
+       left join DWHMON_user b on a.itemgroup2user=b.id
+       left join t_itemgroupunit c on a.itemgroup2groupunit=c.objid;
+
+
+CREATE OR REPLACE VIEW V_ITEM
+AS 
+SELECT   a.objid, items_name, items_grouping, cat_name, c.group_name,
+            type_name, act_show_time,
+            CASE
+               WHEN sla_time IS NULL
+                  THEN 'N/A'
+               WHEN cat_name = 'Daily'
+                  THEN TO_CHAR (TO_DATE (sla_time, 'HH24'),
+                                'HH24:MI:SS'
+                               )
+               ELSE 'Day ' || sla_time
+            END sla_time,
+            CASE
+               WHEN status_items = 1
+                  THEN 'Active'
+               ELSE 'Not Active'
+            END status_items,
+            CASE
+               WHEN report_day = 0
+                  THEN 'N/A'
+               ELSE 'D-' || report_day
+            END report_day, machine_name, ip_address, login_user, login_pass,
+            source_path, source_filename, doc_status,
+            TO_CHAR (handover_date, 'YYYY/MM/DD') handover_date, handover_pic,
+            TO_CHAR (launch_date, 'YYYY/MM/DD') launch_date,
+            TO_CHAR (termination_date, 'YYYY/MM/DD') termination_date,
+            inorder, a.item2groupunit, e.group_name group_name_unit
+       FROM t_items a LEFT JOIN t_itemcat b ON a.items2jobcat = b.objid
+            JOIN t_itemgroup c ON a.items2group = c.objid
+            JOIN t_itemtype d ON a.items2type = d.objid
+            JOIN t_itemgroupunit e ON a.item2groupunit = e.objid
+   --WHERE status_items = 1
+   ORDER BY status_items,items2jobcat,inorder, items_name;
+
+
+CREATE OR REPLACE VIEW V_OVERTIME
+AS 
+SELECT objid,
+          TO_CHAR (start_datetime, 'YYYY/MM/DD HH24:MI:SS') start_datetime,
+          TO_CHAR (end_datetime, 'YYYY/MM/DD HH24:MI:SS') end_datetime,
+          justification_info, duration_m dur_m,
+          ROUND (duration_m / (60 * 60), 2) dur_h, abs2user,
+          b.username username, b.first_name || ' ' || b.last_name emp_name,
+          b.emp_id emp_id, c.username approver_username,
+          CASE
+             WHEN stat_approved = 0
+                THEN 'Pending Approved'
+             WHEN stat_approved = 1
+                THEN 'Approved'
+             ELSE 'Rejected'
+          END stat_approved,
+          approver2user, c.first_name || ' ' || c.last_name approver_emp_name,reject_info
+     FROM t_overtime_his a LEFT JOIN DWHMON_user b ON a.abs2user = b.ID
+          LEFT JOIN DWHMON_user c ON a.approver2user = c.ID
+          order by start_datetime desc;
+
+
+CREATE OR REPLACE VIEW V_SC_REP_SUMMARY
+AS 
+SELECT DAY, TRIM (tag1) tag1, TRIM (tag2) tag2, tag3,tag4, total, total_d1,
+          total_d2, total_d3, total_d4, RANK
+     FROM (SELECT DAY, tag1, tag2, tag3,tag4, total, total_d1, total_d2, total_d3,
+                  total_d4, RANK
+             FROM (SELECT   DAY, tag1, tag2, tag3,tag4, NVL (total, 0) total,
+                            LAG (NVL (total, 0), 1) OVER (PARTITION BY    tag1
+                                                                       || tag2
+                                                                       || tag3||tag4 ORDER BY DAY)
+                                                                     total_d1,
+                            LAG (NVL (total, 0), 2) OVER (PARTITION BY    tag1
+                                                                       || tag2
+                                                                       || tag3||tag4 ORDER BY DAY)
+                                                                     total_d2,
+                            LAG (NVL (total, 0), 3) OVER (PARTITION BY    tag1
+                                                                       || tag2
+                                                                       || tag3||tag4 ORDER BY DAY)
+                                                                     total_d3,
+                            LAG (NVL (total, 0), 4) OVER (PARTITION BY    tag1
+                                                                       || tag2
+                                                                       || tag3||tag4 ORDER BY DAY)
+                                                                     total_d4,
+                            RANK
+                       FROM sc_rep_summary_agg
+                   ORDER BY DAY DESC, tag1 ASC));
+
+
+CREATE OR REPLACE VIEW V_SUM_REPORT
+AS 
+SELECT   c.type_name, d.objid, d.group_name, a.act_items_name,
+            b.items_grouping, a.report_date, a.act_date, e.status_name,
+            a.inorder, NVL (a.act_note, '-') act_note, f.cat_name,
+            TO_CHAR (a.request_datetime,'YYYY/MM/DD HH24:MI:SS') request_datetime,
+            TO_CHAR (a.work_starttime,'YYYY/MM/DD HH24:MI:SS') work_starttime,
+            NVL(TO_CHAR (a.send_time, 'YYYY/MM/DD HH24:MI:SS'),'-') complete_datetime,
+            COUNT (1) jml_rep
+       FROM t_act_his a,
+            t_items b,
+            t_itemtype c,
+            t_itemgroup d,
+            t_actstatus e,
+            t_itemcat f
+      WHERE a.act2items = b.objid
+        AND b.items2type = c.objid
+        AND b.items2group = d.objid
+        AND a.act2actstatus = e.objid
+        AND b.items2jobcat = f.objid
+   GROUP BY c.type_name,
+            d.objid,
+            d.group_name,
+            a.act_items_name,
+            b.items_grouping,
+            a.report_date,
+            a.act_date,
+            e.status_name,
+            a.inorder,
+            a.act_note,
+            f.cat_name,
+            TO_CHAR (a.send_time, 'YYYY/MM/DD HH24:MI:SS'),
+            TO_CHAR (a.work_starttime,'YYYY/MM/DD HH24:MI:SS'),
+            TO_CHAR (a.request_datetime,'YYYY/MM/DD HH24:MI:SS')
+   ORDER BY report_date DESC;
+
+
+CREATE OR REPLACE VIEW V_SUM_REPORT_PENDING
+AS 
+SELECT   c.type_name, d.objid, d.group_name, a.act_items_name,
+            b.items_grouping, a.report_date, a.act_date, e.status_name,
+            a.inorder, NVL (a.act_note, '-') act_note, f.cat_name,
+            TO_CHAR (a.request_datetime,'YYYY/MM/DD HH24:MI:SS') request_datetime,
+            TO_CHAR (a.work_starttime,'YYYY/MM/DD HH24:MI:SS') work_starttime,
+            NVL(TO_CHAR (a.send_time, 'YYYY/MM/DD HH24:MI:SS'),'-') complete_datetime,
+            COUNT (1) jml_rep
+       FROM t_act_his a,
+            t_items b,
+            t_itemtype c,
+            t_itemgroup d,
+            t_actstatus e,
+            t_itemcat f
+      WHERE a.act2items = b.objid
+        AND b.items2type = c.objid
+        AND b.items2group = d.objid
+        AND a.act2actstatus = e.objid
+        AND b.items2jobcat = f.objid
+        AND a.act2actstatus NOT IN (4, 6)
+   GROUP BY c.type_name,
+            d.objid,
+            d.group_name,
+            a.act_items_name,
+            b.items_grouping,
+            a.report_date,
+            a.act_date,
+            e.status_name,
+            a.inorder,
+            a.act_note,
+            f.cat_name,
+            TO_CHAR (a.send_time, 'YYYY/MM/DD HH24:MI:SS'),
+            TO_CHAR (a.work_starttime,'YYYY/MM/DD HH24:MI:SS'),
+            TO_CHAR (a.request_datetime,'YYYY/MM/DD HH24:MI:SS')
+   ORDER BY report_date DESC;
+
+
+CREATE OR REPLACE VIEW V_USERS
+AS 
+select a.id,username,first_name,last_name,emp_id,ip_address,level_name,group_name,email,case when stat_login=1 then 'Yes' else 'No' end STAT_LOGIN,TO_CHAR(last_login,'YYYY/MM/DD HH24:MI:SS') LAST_LOGIN,
+to_char(creation_time,'YYYY/MM/DD HH24:MI:SS') CREATION_TIME,creator,case when flag=1 then 'Active' else 'Not Active' end STAT_USER
+from DWHMON_USER a LEFT JOIN DWHMON_USER_LEVEL b ON a.level_id =b.id
+LEFT JOIN DWHMON_USER_GROUP c ON a.group_id =c.id;
+
+
+BEGIN
+  SYS.DBMS_SCHEDULER.CREATE_JOB
+    (
+       job_name        => 'BACKUP_DAILY_JOB'
+      ,start_date      => TO_TIMESTAMP_TZ('2013/05/17 02:00:00.000000 +07:00','yyyy/mm/dd hh24:mi:ss.ff tzh:tzm')
+      ,repeat_interval => 'FREQ=DAILY;'
+      ,end_date        => NULL
+      ,job_class       => 'DEFAULT_JOB_CLASS'
+      ,job_type        => 'PLSQL_BLOCK'
+      ,job_action      => 'BEGIN backup_activity_daily; END;'
+      ,comments        => ' refresh report data from t_act_his table '
+    );
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'BACKUP_DAILY_JOB'
+     ,attribute => 'RESTARTABLE'
+     ,value     => FALSE);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'BACKUP_DAILY_JOB'
+     ,attribute => 'LOGGING_LEVEL'
+     ,value     => SYS.DBMS_SCHEDULER.LOGGING_OFF);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'BACKUP_DAILY_JOB'
+     ,attribute => 'MAX_FAILURES');
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'BACKUP_DAILY_JOB'
+     ,attribute => 'MAX_RUNS');
+  BEGIN
+    SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+      ( name      => 'BACKUP_DAILY_JOB'
+       ,attribute => 'STOP_ON_WINDOW_CLOSE'
+       ,value     => FALSE);
+  EXCEPTION
+    -- could fail if program is of type EXECUTABLE...
+    WHEN OTHERS THEN
+      NULL;
+  END;
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'BACKUP_DAILY_JOB'
+     ,attribute => 'JOB_PRIORITY'
+     ,value     => 3);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'BACKUP_DAILY_JOB'
+     ,attribute => 'SCHEDULE_LIMIT');
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'BACKUP_DAILY_JOB'
+     ,attribute => 'AUTO_DROP'
+     ,value     => TRUE);
+
+  SYS.DBMS_SCHEDULER.ENABLE
+    (name                  => 'BACKUP_DAILY_JOB');
+END;
+/
+
+BEGIN
+  SYS.DBMS_SCHEDULER.CREATE_JOB
+    (
+       job_name        => 'GENERATE_ACT_ITEMS'
+      ,start_date      => TO_TIMESTAMP_TZ('2012/10/15 03:00:00.000000 +07:00','yyyy/mm/dd hh24:mi:ss.ff tzh:tzm')
+      ,repeat_interval => 'FREQ=DAILY;'
+      ,end_date        => NULL
+      ,job_class       => 'DEFAULT_JOB_CLASS'
+      ,job_type        => 'PLSQL_BLOCK'
+      ,job_action      => 'BEGIN set_act_daily(sysdate,0,15); END;'
+      ,comments        => ' generate activity items every day'
+    );
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'GENERATE_ACT_ITEMS'
+     ,attribute => 'RESTARTABLE'
+     ,value     => FALSE);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'GENERATE_ACT_ITEMS'
+     ,attribute => 'LOGGING_LEVEL'
+     ,value     => SYS.DBMS_SCHEDULER.LOGGING_OFF);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'GENERATE_ACT_ITEMS'
+     ,attribute => 'MAX_FAILURES');
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'GENERATE_ACT_ITEMS'
+     ,attribute => 'MAX_RUNS');
+  BEGIN
+    SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+      ( name      => 'GENERATE_ACT_ITEMS'
+       ,attribute => 'STOP_ON_WINDOW_CLOSE'
+       ,value     => FALSE);
+  EXCEPTION
+    -- could fail if program is of type EXECUTABLE...
+    WHEN OTHERS THEN
+      NULL;
+  END;
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'GENERATE_ACT_ITEMS'
+     ,attribute => 'JOB_PRIORITY'
+     ,value     => 3);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'GENERATE_ACT_ITEMS'
+     ,attribute => 'SCHEDULE_LIMIT');
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'GENERATE_ACT_ITEMS'
+     ,attribute => 'AUTO_DROP'
+     ,value     => TRUE);
+
+  SYS.DBMS_SCHEDULER.ENABLE
+    (name                  => 'GENERATE_ACT_ITEMS');
+END;
+/
+
+BEGIN
+  SYS.DBMS_SCHEDULER.CREATE_JOB
+    (
+       job_name        => 'GENERATE_WEEKLY_REPORT'
+      ,start_date      => TO_TIMESTAMP_TZ('2013/01/28 03:00:00.000000 +07:00','yyyy/mm/dd hh24:mi:ss.ff tzh:tzm')
+      ,repeat_interval => 'FREQ=WEEKLY;'
+      ,end_date        => NULL
+      ,job_class       => 'DEFAULT_JOB_CLASS'
+      ,job_type        => 'PLSQL_BLOCK'
+      ,job_action      => 'BEGIN weekly_report; END;'
+      ,comments        => ' generate weekly report every week'
+    );
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'GENERATE_WEEKLY_REPORT'
+     ,attribute => 'RESTARTABLE'
+     ,value     => FALSE);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'GENERATE_WEEKLY_REPORT'
+     ,attribute => 'LOGGING_LEVEL'
+     ,value     => SYS.DBMS_SCHEDULER.LOGGING_OFF);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'GENERATE_WEEKLY_REPORT'
+     ,attribute => 'MAX_FAILURES');
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'GENERATE_WEEKLY_REPORT'
+     ,attribute => 'MAX_RUNS');
+  BEGIN
+    SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+      ( name      => 'GENERATE_WEEKLY_REPORT'
+       ,attribute => 'STOP_ON_WINDOW_CLOSE'
+       ,value     => FALSE);
+  EXCEPTION
+    -- could fail if program is of type EXECUTABLE...
+    WHEN OTHERS THEN
+      NULL;
+  END;
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'GENERATE_WEEKLY_REPORT'
+     ,attribute => 'JOB_PRIORITY'
+     ,value     => 3);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'GENERATE_WEEKLY_REPORT'
+     ,attribute => 'SCHEDULE_LIMIT');
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'GENERATE_WEEKLY_REPORT'
+     ,attribute => 'AUTO_DROP'
+     ,value     => TRUE);
+END;
+/
+
+BEGIN
+  SYS.DBMS_SCHEDULER.CREATE_JOB
+    (
+       job_name        => 'GET_NOTIF_USER'
+      ,start_date      => TO_TIMESTAMP_TZ('2012/11/19 00:05:00.000000 +07:00','yyyy/mm/dd hh24:mi:ss.ff tzh:tzm')
+      ,repeat_interval => 'FREQ=DAILY;'
+      ,end_date        => NULL
+      ,job_class       => 'DEFAULT_JOB_CLASS'
+      ,job_type        => 'PLSQL_BLOCK'
+      ,job_action      => 'BEGIN set_notif; END;'
+      ,comments        => ' '
+    );
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'GET_NOTIF_USER'
+     ,attribute => 'RESTARTABLE'
+     ,value     => FALSE);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'GET_NOTIF_USER'
+     ,attribute => 'LOGGING_LEVEL'
+     ,value     => SYS.DBMS_SCHEDULER.LOGGING_OFF);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'GET_NOTIF_USER'
+     ,attribute => 'MAX_FAILURES');
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'GET_NOTIF_USER'
+     ,attribute => 'MAX_RUNS');
+  BEGIN
+    SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+      ( name      => 'GET_NOTIF_USER'
+       ,attribute => 'STOP_ON_WINDOW_CLOSE'
+       ,value     => FALSE);
+  EXCEPTION
+    -- could fail if program is of type EXECUTABLE...
+    WHEN OTHERS THEN
+      NULL;
+  END;
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'GET_NOTIF_USER'
+     ,attribute => 'JOB_PRIORITY'
+     ,value     => 3);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'GET_NOTIF_USER'
+     ,attribute => 'SCHEDULE_LIMIT');
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'GET_NOTIF_USER'
+     ,attribute => 'AUTO_DROP'
+     ,value     => TRUE);
+
+  SYS.DBMS_SCHEDULER.ENABLE
+    (name                  => 'GET_NOTIF_USER');
+END;
+/
+
+BEGIN
+  SYS.DBMS_SCHEDULER.CREATE_JOB
+    (
+       job_name        => 'REFRESH_OUT_ATTENDANCE'
+      ,start_date      => TO_TIMESTAMP_TZ('2012/10/18 00:05:00.000000 +07:00','yyyy/mm/dd hh24:mi:ss.ff tzh:tzm')
+      ,repeat_interval => 'FREQ=DAILY;'
+      ,end_date        => NULL
+      ,job_class       => 'DEFAULT_JOB_CLASS'
+      ,job_type        => 'PLSQL_BLOCK'
+      ,job_action      => 'BEGIN refresh_attendance; END;'
+      ,comments        => ' '
+    );
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'REFRESH_OUT_ATTENDANCE'
+     ,attribute => 'RESTARTABLE'
+     ,value     => FALSE);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'REFRESH_OUT_ATTENDANCE'
+     ,attribute => 'LOGGING_LEVEL'
+     ,value     => SYS.DBMS_SCHEDULER.LOGGING_OFF);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'REFRESH_OUT_ATTENDANCE'
+     ,attribute => 'MAX_FAILURES');
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'REFRESH_OUT_ATTENDANCE'
+     ,attribute => 'MAX_RUNS');
+  BEGIN
+    SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+      ( name      => 'REFRESH_OUT_ATTENDANCE'
+       ,attribute => 'STOP_ON_WINDOW_CLOSE'
+       ,value     => FALSE);
+  EXCEPTION
+    -- could fail if program is of type EXECUTABLE...
+    WHEN OTHERS THEN
+      NULL;
+  END;
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'REFRESH_OUT_ATTENDANCE'
+     ,attribute => 'JOB_PRIORITY'
+     ,value     => 3);
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE_NULL
+    ( name      => 'REFRESH_OUT_ATTENDANCE'
+     ,attribute => 'SCHEDULE_LIMIT');
+  SYS.DBMS_SCHEDULER.SET_ATTRIBUTE
+    ( name      => 'REFRESH_OUT_ATTENDANCE'
+     ,attribute => 'AUTO_DROP'
+     ,value     => TRUE);
+END;
+/
+
+ALTER TABLE T_OVERTIME_HIS ADD (
+  CONSTRAINT T_OVERTIME_HIS_PK
+ PRIMARY KEY
+ (OBJID));
+
+ALTER TABLE T_ITEMTYPE ADD (
+  CONSTRAINT T_ITEMTYPE_PK
+ PRIMARY KEY
+ (OBJID));
+
+ALTER TABLE T_ITEMS ADD (
+  CONSTRAINT T_ITEMS_PK
+ PRIMARY KEY
+ (OBJID));
+
+ALTER TABLE T_ITEMGROUPUNIT_USER ADD (
+  PRIMARY KEY
+ (OBJID));
+
+ALTER TABLE T_ITEMGROUPUNIT ADD (
+  PRIMARY KEY
+ (OBJID));
+
+ALTER TABLE T_ITEMGROUP ADD (
+  CONSTRAINT T_ITEMGROUP_PK
+ PRIMARY KEY
+ (OBJID));
+
+ALTER TABLE T_ACT_HIS ADD (
+  CONSTRAINT T_ACT_HIS_PK
+ PRIMARY KEY
+ (OBJID));
+
+ALTER TABLE T_ACTSTATUS ADD (
+  CONSTRAINT T_ACTSTATUS_PK
+ PRIMARY KEY
+ (OBJID));
+
+ALTER TABLE T_ABSENCE_HIS ADD (
+  PRIMARY KEY
+ (OBJID));
+
+ALTER TABLE T_HOUR_INTERVAL ADD (
+  CONSTRAINT T_HOUR_INTERVAL_PK
+ PRIMARY KEY
+ (H_CODE));
+
+ALTER TABLE T_ACT_HIS_DONE ADD (
+  PRIMARY KEY
+ (OBJID));
+
+CREATE MATERIALIZED VIEW MV_ACT_HIS_REP
+NOCACHE
+LOGGING
+NOCOMPRESS
+NOPARALLEL
+BUILD IMMEDIATE
+REFRESH FORCE
+START WITH TO_DATE('30-May-2013 01:00:00','dd-mon-yyyy hh24:mi:ss')
+NEXT TRUNC(SYSDATE)+1+(1/24) 
+WITH PRIMARY KEY
+AS 
+select act_date,substr(act_date,1,4) YEAR, 
+substr(act_date,5,2) MONTH_MM,
+to_char(to_date(substr(act_date,5,2),'MM'),'MON') MONTH_TXT,
+substr(act_date,7,2) DAY_DD,
+to_char(to_date(substr(act_date,7,2),'DD'),'DAY') DAY_TXT,
+group_id,group_name,sum(jml_rep) JML_REP from v_sum_report
+--where act_date between to_char(sysdate-60,'YYYYMMDD') and to_char(sysdate-1,'YYYYMMDD')
+group by act_date,substr(act_date,1,4),
+substr(act_date,5,2),
+to_char(to_date(substr(act_date,5,2),'MM'),'MON'),
+substr(act_date,7,2),
+to_char(to_date(substr(act_date,7,2),'DD'),'DAY'),
+group_id,group_name;
+
+DECLARE
+  SnapArray SYS.DBMS_UTILITY.UNCL_ARRAY;
+BEGIN
+  SnapArray(1) := 'MV_ACT_HIS_REP';
+  SnapArray(2) := NULL;
+  SYS.DBMS_REFRESH.MAKE (
+    name => 'DAILY_REFRESH'
+    ,tab  => SnapArray
+    ,next_date => TO_DATE('05/30/2013 01:00:00', 'MM/DD/YYYY HH24:MI:SS')
+    ,interval  => 'TRUNC(SYSDATE)+1+(1/24) '
+    ,implicit_destroy => FALSE
+    ,lax => TRUE
+    ,job => 0
+    ,rollback_seg => NULL
+    ,push_deferred_rpc => TRUE
+    ,refresh_after_errors => TRUE
+    ,purge_option => 0
+    ,parallelism => 0
+    ,heap_size => 0
+  );
+Commit;
+END;
+/
+
+

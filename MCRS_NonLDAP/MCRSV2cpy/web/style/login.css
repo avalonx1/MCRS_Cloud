@@ -1,0 +1,70 @@
+
+* {margin:0;padding:0}
+.body{ background-color:#DDD;}
+select,input { padding: 3px; border: 1px solid #999; color:#555;font: normal 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;margin: 2px 0}
+.login_back{padding:161px 0 0 35%;width:100%;height:100%;
+           background:#93899a url("../images/back.jpg") repeat 0% 0%}
+table td{font: bold 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;}
+.login_front{border: 0px solid #000;
+            font: normal 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; 
+            padding:10px 2px 5px 135px;
+            width:400px;
+            height:300px; 
+            position:relative; 
+            background: url(../images/login_home.png) no-repeat 0 0}
+.login_name{border: 0px solid #000; color:#fff;
+            font: normal 36px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; 
+           padding:10px 5px 5px 20px;
+           margin-left: 60px;
+           width: 100px}
+
+.company_icon{border: 0px solid #000;
+             font: normal 12px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; 
+             padding:0px 0 0 20px;
+             top: -20px;
+             left:200px;
+             width: 100px; height:40px;
+             position:absolute; 
+             background: url(../images/bank_logo_transparant120.png) no-repeat 0 0}
+
+
+.sql{background-color: #FFBFBF; border: 1px solid #215800; padding: 10px 10px; margin-bottom: 20px; }
+.alert{background-color: #FFE5BF; border: 1px solid #215800; padding: 10px 10px; margin-bottom: 20px; }
+.warning{background-color: #FFBFBF; border: 1px solid #215800; padding: 10px 10px; margin-bottom: 20px; }
+.info{background-color: #BFE5FF; border: 1px solid #215800; padding: 10px 10px; margin-bottom: 20px; }
+
+.forgetPass {
+    cursor:pointer;
+    float: right; 
+    color:#fff; 
+    font: normal 10px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; }
+
+.forgetPass a {
+    color:#fff;
+    text-decoration:none;
+}
+.forgetPass a:hover {
+    color:#73bd45;
+}
+
+
+
+.button {
+    
+    cursor:pointer;
+    margin:5px;
+    width:50px;
+    height:31px;
+    background-color:#666666;
+    text-align:center;
+    padding:2px; 
+    color:#FFFFFF;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.maintenance {
+    
+    
+}
+

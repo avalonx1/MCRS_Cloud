@@ -1,0 +1,5 @@
+admin/adminadmin
+
+port 
+admin 4850
+web   8088
