@@ -1,3 +1,4 @@
+<%@ page language="java" import="Engines.ReportTracking.*"%>
 <%@include file="../../../includes/check_auth_layer3.jsp"%>
 <%
 

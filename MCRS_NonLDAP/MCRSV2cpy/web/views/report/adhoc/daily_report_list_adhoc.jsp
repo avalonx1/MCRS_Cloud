@@ -1,14 +1,8 @@
 <%@include file="../../../includes/check_auth_layer2.jsp"%>
-<%
-   
+<% 
     int i = 0;
-    
-     
-    
 %>
-        
 
-        
     <script type="text/javascript">
          $(document).ready(function() {
           
@@ -39,7 +33,7 @@
                         $('#filter_box_data').html(data);
 
                     },
-                    complete: function(){                        $('#loading_filter').hide();
+                    complete: function(){$('#loading_filter').hide();
                     }
                 });
             
@@ -76,11 +70,7 @@
             $('#icon_panel_show_filter').fadeIn('slow');
             $('#filter_box_data').slideUp('fast');
             });
-                
-                   
-                            	
-            
-            
+
            });
 
     </script>
