@@ -168,7 +168,7 @@
                                     return false;
                                     });
                                        
-                                       $('#recstat_<%=resultSet.getString(1)%>').click(function() {
+                                    $('#recstat_<%=resultSet.getString(1)%>').click(function() {
                                     var answer = confirm('Are You Sure want to delete File with ID <%=resultSet.getString("ID")%> (<%=resultSet.getString("doc_path_key")%>) ?');
                                     if (answer) {
                                     $('#loading').show();

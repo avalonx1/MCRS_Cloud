@@ -83,8 +83,6 @@
                         
                         }
                         
-                        
-                        
                         resultSet = db.executeQuery(sql);
                         String rowstate = "even";
                         

@@ -14,16 +14,9 @@
     if (filter_itemname == null) {
             filter_itemname = "";
         }
-  
-  
- 
     int i = 0;
     
-    
 %>
-    
-
-    
 
 <div class="tablelist_wrap">
     <div id="refresh_data" class="add_optional">[refresh data] </div>
