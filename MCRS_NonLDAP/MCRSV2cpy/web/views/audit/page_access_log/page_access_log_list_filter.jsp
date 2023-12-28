@@ -6,8 +6,6 @@
            filter_itemname="";
          }
          
-        
-      
 %>
 <div  class="myformfilter">
     <form  id="filter_form" method="post" action="#">
