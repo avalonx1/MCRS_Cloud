@@ -31,7 +31,7 @@ if (statSession==null) {
         <div class="login_back">
             <div class="login_front">
                 <div class="company_icon"></div>
-                <div class="login_name">MCRSV4</div>
+                <div class="login_name">MCRSdev</div>
                 <form id="formLogin" method="post" action="">
 
                     <table border=0 width="">
