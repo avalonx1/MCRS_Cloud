@@ -3,8 +3,8 @@
               
     String id = request.getParameter("id");
     String recstat=request.getParameter("recstat");
-    String tableName="t_report_item_hide";
-    String statusColumn="record_stat";
+    String tableName="t_report_item_hide_exception"; 
+//    String statusColumn="record_stat";
     String recstatname="";
     String sql;
     
@@ -15,25 +15,26 @@
                 db.connect(1);
                     
                 
-                if (recstat.equals("1")) {
-                sql = "update "+tableName+" set "+statusColumn+"=0 where ID=" + id + " ";
+//                if (recstat.equals("1")) {
+//                sql = "update "+tableName+" set "+statusColumn+"=0 where ID=" + id + " ";
+//                
+//                 recstatname="deactivated";
+//
+//                    
+//                } else {
+//                sql = "update "+tableName+" set "+statusColumn+"=1 where ID=" + id + " ";
+//                
+//                 recstatname="activated";
+//                 
+//                }
                 
-                 recstatname="deactivated";
-
-                    
-                } else {
-                sql = "update "+tableName+" set "+statusColumn+"=1 where ID=" + id + " ";
-                
-                 recstatname="activated";
-                 
-                }
                 //debug mode            
-                        if (v_debugMode.equals("1")) {
-                        out.println("<div class=sql>"+sql+"</div>");
-                        }
+//                        if (v_debugMode.equals("1")) {
+//                        out.println("<div class=sql>"+sql+"</div>");
+//                        }
                         
-                db.executeUpdate(sql);
-                out.println("<div class=info> "+recstatname+" record status ID "+id+" success..</div>");
+//                db.executeUpdate(sql);
+//                out.println("<div class=info> "+recstatname+" record status ID "+id+" success..</div>");
                     
             } catch (SQLException Sqlex) {
                 out.println("<div class=sql>" + Sqlex.getMessage() + "</div>");

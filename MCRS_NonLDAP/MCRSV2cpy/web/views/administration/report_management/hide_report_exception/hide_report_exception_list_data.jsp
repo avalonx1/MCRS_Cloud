@@ -42,14 +42,14 @@
                         db.connect(1);
                         String sql;
 
-                        sql = "select id,report_code, report_name, report_date_start, report_date_end, record_stat"
-                              + " from v_report_item_hide "
-                              + " order by id";
+//                        sql = "select id,report_code, report_name, report_date_start, report_date_end, record_stat"
+//                              + " from v_report_item_hide "
+//                              + " order by id";
                               
-//                              sql = "SELECT a.id, b.id AS user_id, b.username,(b.first_name::text || ' ') || b.last_name::text AS fullname, "
-//                                    + "a.notes,a.created_time "
-//                                    + "FROM t_report_item_hide_exception a "
-//                                    + "LEFT JOIN t_user b ON a.created_userid = b.id ORDER BY b.username";
+                              sql = "SELECT a.id, b.id AS user_id, b.username,(b.first_name::text || ' ') || b.last_name::text AS fullname, "
+                                    + "a.notes,a.created_time "
+                                    + "FROM t_report_item_hide_exception a "
+                                    + "LEFT JOIN t_user b ON a.created_userid = b.id ORDER BY b.username";
                         
                     
                
@@ -85,23 +85,7 @@
                                 </div>
                                 
                                 
-                                <% 
-                                 
-                                 String recStat= resultSet.getString("record_stat");
-                                 String recStatName="";
-                                 
-                                if ( recStat.equals("1")) {
-                                    recStatName="Deactivate";
                                 
-                                %>
-                                <div class="action_menu" id="recstat_<%=resultSet.getString(1)%>" >
-                                    <div class="delete_icon" title="deactivate this item <%=resultSet.getString(2)%>"></div>
-                                </div>
-                                <% } else { recStatName="Activate";  %>
-                                <div class="action_menu" id="recstat_<%=resultSet.getString(1)%>" >
-                                    <div class="activate_icon" title="activate this item <%=resultSet.getString(2)%>"></div>
-                                </div>
-                                <% } %>
                                 
                                 
                                 <script type="text/javascript">
@@ -131,29 +115,7 @@
                                     return false;
                                     });
             
-                                    $('#recstat_<%=resultSet.getString(1)%>').click(function() {
-                                    var answer = confirm('Are You Sure want to <%=recStatName%> ID <%=resultSet.getString("ID")%> ?');
-                                    if (answer) {
-                                    $('#loading').show();
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: "administration/report_management/hide_report_exception/hide_report_exception_list_recstat_process.jsp",
-                                        data: {id:<%=resultSet.getString("ID")%>,recstat:<%=recStat%>},
-                                        success: function(data) {
-                                            $('#status_msg').empty();
-                                            $('#status_msg').html(data);
-                                            $('#status_msg').show();
-
-                                        },
-                                        complete: function(){
-                                           $('#loading').hide();
-                                        }
-                                        });
-                                        
-                                     }
-                                        
-                                    return false;
-                                    });
+                                    
                                     
                                </script>
                        
@@ -161,11 +123,18 @@
 
                       <% 
                         
-                             out.println("<td> " + resultSet.getString("report_code") + " </td>");
-                             out.println("<td> " + resultSet.getString("report_name") + " </td>");
-                              out.println("<td> " + resultSet.getString("report_date_start") + " </td>");
-                               out.println("<td> " + resultSet.getString("report_date_end") + " </td>");
-                                out.println("<td> " + resultSet.getString("record_stat") + " </td>");
+                            // out.println("<td> " + resultSet.getString("report_code") + " </td>");
+                            // out.println("<td> " + resultSet.getString("report_name") + " </td>");
+                            // out.println("<td> " + resultSet.getString("report_date_start") + " </td>");
+                            // out.println("<td> " + resultSet.getString("report_date_end") + " </td>");
+                            // out.println("<td> " + resultSet.getString("record_stat") + " </td>");
+                             
+                             
+                             out.println("<td> " + resultSet.getString("user_id") + " </td>");
+                             out.println("<td> " + resultSet.getString("username") + " </td>");
+                             out.println("<td> " + resultSet.getString("fullname") + " </td>");
+                             out.println("<td> " + resultSet.getString("notes") + " </td>");
+                             out.println("<td> " + resultSet.getString("created_time") + " </td>");
                              
                             out.println("</tr> ");
                         }

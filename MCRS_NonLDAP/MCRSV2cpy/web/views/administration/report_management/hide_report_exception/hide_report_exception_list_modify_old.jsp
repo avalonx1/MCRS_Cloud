@@ -112,7 +112,7 @@
    
    
    <tr>
-            <td width="100" align="left">User Name</td>
+            <td width="100" align="left">Report Name</td>
             <td><div class="markMandatory">*</div></td>
             <td width="100" align="left"><select id="id_ex" name="id_ex">
       <%
@@ -124,9 +124,9 @@
                                             db.connect(1);
                                             String sql;
 
-                                            sql = "SELECT id, (username::text || ' - ') || (first_name::text || ' ') || Last_name::text "
-                                                  + " FROM t_user  "
-                                                  + " ORDER BY 1 ";
+                                            sql = "SELECT id ID, '['||report_code||'] - '||report_name AS DESC "
+                                                    + " FROM t_report_item  "
+                                                    + " where report_status=1 ORDER BY 2";
                                             resultSet = db.executeQuery(sql);
                                             while (resultSet.next()) {
                                                 if (id_ex.equalsIgnoreCase(resultSet.getString(1))) {
@@ -151,10 +151,26 @@
    
   </tr>
   
-  <tr>
-            <td width="100" align="left">Notes</td>
+    <tr>
+    <td>Start Date</td>
+    <td><div class="markMandatory">*</div></td>
+    <td><div class="form_input_date"><input readonly=true type="text" id="report_date_start" name="report_date_start" class="datetimepicker"  size="30" maxlength="10" value="<% out.println((report_date_start == null) ? "" : report_date_start); %>"  /></div></td>
+    
+    </tr>
+    
+    
+    <tr>
+    <td>End Date</td>
+    <td><div class="markMandatory">*</div></td>
+    <td><div class="form_input_date"><input readonly=true type="text" id="report_date_end" name="report_date_end" class="datetimepicker"  size="30" maxlength="10" value="<% out.println((report_date_end == null) ? "" : report_date_end); %>"  /></div></td>
+    
+    </tr>
+    
+        
+    <tr>
+            <td width="100" align="left">Status</td>
             <td><div class="markMandatory">*</div></td>
-            <td width="100" align="left"><select id="notes" name="notes">
+            <td width="100" align="left"><select id="record_stat" name="record_stat">
       <%
 
                                     try {
@@ -164,12 +180,10 @@
                                             db.connect(1);
                                             String sql;
 
-                                            sql = "select id, (level_code::text || ' - ') || level_name::text as level_code " 
-                                            +" from t_user_level order by 1";
-                                            
+                                            sql = "SELECT 1 ID,'Activate' AS DESC UNION ALL SELECT 0 ID,'Deactivate' AS DESC ORDER BY 2";
                                             resultSet = db.executeQuery(sql);
                                             while (resultSet.next()) {
-                                                if (id_ex.equalsIgnoreCase(resultSet.getString(1))) {
+                                                if (record_stat.equalsIgnoreCase(resultSet.getString(1))) {
                                                     out.println("<option value=" + resultSet.getString(1) + " selected=selected >" + resultSet.getString(2) + "</option>");
                                                 } else {
                                                     out.println("<option value=" + resultSet.getString(1) + " >" + resultSet.getString(2) + "</option>");
@@ -188,10 +202,9 @@
                                     }
                     %>
     </select></td>
-   
   </tr>
-  
-
+    
+ 
 </table></td>  
             </tr>
             <tr>

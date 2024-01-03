@@ -18,6 +18,14 @@
     String record_stat=request.getParameter("record_stat");
    
     
+    //a.id, b.id AS user_id, b.username,(b.first_name::text || ' ') || b.last_name::text AS fullname, a.notes,a.created_time
+    
+    String id_ex=request.getParameter("id");
+    //String username=request.getParameter("username");
+    String fullname=request.getParameter("fullname");
+    String notes=request.getParameter("notes");
+    String created_time=request.getParameter("created_time"); 
+    
     
     
     
@@ -59,15 +67,23 @@
                 
                if (actionCode.equals("ADD")) {
                    
-                     sql = "delete from t_report_item_hide where report_id="+report_id+" and report_date_start="+report_date_startVal+" "
-                           + "and report_date_end="+report_date_endVal+" and record_stat="+record_stat+" ";
+//                     sql = "delete from t_report_item_hide where report_id="+report_id+" and report_date_start="+report_date_startVal+" "
+//                           + "and report_date_end="+report_date_endVal+" and record_stat="+record_stat+" ";
+//                       
+//                       db.executeUpdate(sql);
                        
-                       db.executeUpdate(sql);
-                       
-                sql = "insert into t_report_item_hide ("
-                    +"id, report_id, report_date_start,report_date_end,record_stat) "
-                    +"values (nextval('t_report_item_hide_seq'),"+report_id+","+report_date_startVal+","+report_date_endVal+","+record_stat+" )";
-                    
+//                sql = "insert into t_report_item_hide ("
+//                    +"id, report_id, report_date_start,report_date_end,record_stat) "
+//                    +"values (nextval('t_report_item_hide_seq'),"+report_id+","+report_date_startVal+","+report_date_endVal+","+record_stat+" )";
+//                    
+
+                 sql = "INSERT INTO t_report_item_hide_exception("
+                 + "id, notes, created_userid, created_time)      "
+                 //+ "SELECT a.id, b.id AS user_id, b.username,(b.first_name::text || ' ') || b.last_name::text AS fullname, a.notes,a.created_time "
+                 //+ "FROM t_report_item_hide_exception "
+                 //+ "LEFT JOIN t_user b ON a.created_userid = b.id";
+                 +"values (nextval('t_report_item_hide_exception_seq'),"+notes+","+fullname+","+created_time+" )";
+
                 actionDesc="Add";
                         
                }else {
