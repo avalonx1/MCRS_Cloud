@@ -56,8 +56,8 @@ if (v_userID!=null) {
           session.removeAttribute("session_last_name");
           session.invalidate();
                         
-//          response.sendRedirect("login.jsp");
-          response.sendRedirect("loginAD.jsp");
+          response.sendRedirect("login.jsp");
+//          response.sendRedirect("login_non_ad.jsp");
            
             
  %>

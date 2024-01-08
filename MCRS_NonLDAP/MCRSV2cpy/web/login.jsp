@@ -31,7 +31,7 @@ if (statSession==null) {
         <div class="login_back">
             <div class="login_front">
                 <div class="company_icon"></div>
-                <div class="login_name">MCRSV4</div>
+                <div class="login_name">MCRS</div>
                 <form id="formLogin" method="post" action="">
 
                     <table border=0 width="">
@@ -99,22 +99,22 @@ if (statSession==null) {
 //                                                    
 //                                                      
 //   
-//                                                    ldapActiveDirectory ldap = new ldapActiveDirectory(v_clientIP);
+                                                    ldapActiveDirectory ldap = new ldapActiveDirectory(v_clientIP);
 ////                                                    String username="20131254";
 ////                                                    String password="Password*3";
 //        
 //                                                    
-////                                                    ldapActiveDirectory ldap = new ldapActiveDirectory();
-////                                                    ldap.getName(username);
-////                                                    ldap.getEmail(username);
-////                                                    ldap.getTitle(username);
-//                                                        isEligibleLdap=ldap.getAuthByDName(username,password);
-                                                        String AttrName= "20160038";
-                                                        String AttrFirstName="20160038";
-                                                        String AttrLastName="20160038";
-                                                        String AttrEmail="20160038";
-                                                        String AttrTitle="20160038";
-                                                        String AttrIPPhone="20160038";
+//                                                    ldapActiveDirectory ldap = new ldapActiveDirectory();
+                                                    ldap.getName(username);
+                                                    ldap.getEmail(username);
+                                                    ldap.getTitle(username);
+                                                    isEligibleLdap=ldap.getAuthByDName(username,password);
+                                                        String AttrName= "";
+                                                        String AttrFirstName="";
+                                                        String AttrLastName="";
+                                                        String AttrEmail="";
+                                                        String AttrTitle="";
+                                                        String AttrIPPhone="";
 //
                                                         if (isEligibleLdap) {
                                                             stat_in=3;

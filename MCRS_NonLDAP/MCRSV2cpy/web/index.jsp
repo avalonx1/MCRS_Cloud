@@ -23,12 +23,12 @@
         (String) session.getAttribute("session_level") == null) {
             String statSession = request.getParameter("stat_session");
             if (statSession==null) {
-                response.sendRedirect("loginAD.jsp");
-//                response.sendRedirect("login.jsp");
+//                response.sendRedirect("login_non_ad.jsp");
+                response.sendRedirect("login.jsp");
             }else {
-//                response.sendRedirect("login.jsp?stat_session=1");
+                response.sendRedirect("login.jsp?stat_session=1");
 //                response.sendRedirect("login_masuk.jsp?stat_session=1");
-                response.sendRedirect("loginAD.jsp?stat_session=1");
+//                response.sendRedirect("login_non_ad.jsp?stat_session=1");
             }
             
         } else {
