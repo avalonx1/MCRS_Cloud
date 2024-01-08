@@ -41,6 +41,7 @@ public class Database {
         inCtx = new InitialContext();
         if ( dbid==1 ) {
             dbname="MCRS-APP-DEV";
+            //dbname ="MCRS-APP";
         }else if ( dbid==2 ){
             dbname="DWHPRD.BMIDWH";
         } else if ( dbid==3 ){

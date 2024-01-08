@@ -12,10 +12,10 @@
     id = request.getParameter("id");
     }
     
-    String report_id=request.getParameter("report_id");
-    String report_date_start=request.getParameter("report_date_start");
-    String report_date_end=request.getParameter("report_date_end");
-    String record_stat=request.getParameter("record_stat");
+    //String report_id=request.getParameter("report_id");
+    //String report_date_start=request.getParameter("report_date_start");
+    //String report_date_end=request.getParameter("report_date_end");
+    //String record_stat=request.getParameter("record_stat");
    
     
     //a.id, b.id AS user_id, b.username,(b.first_name::text || ' ') || b.last_name::text AS fullname, a.notes,a.created_time
@@ -27,29 +27,6 @@
     String created_time=request.getParameter("created_time"); 
     
     
-    
-    
-    //VALIDATION
-    boolean validate = true;
-    String errorMessage = "";
-    
-    String report_date_startVal="";
-    if (report_date_start.equals("")){
-    report_date_startVal="NULL";
-    validate = false;
-    errorMessage += "- Field report_date_start tidak boleh null <br>";
-    }else{
-    report_date_startVal="to_timestamp('"+report_date_start+"','YYYY-MM-DD HH24:MI')";    
-    }
-    
-     String report_date_endVal="";
-    if (report_date_start.equals("")){
-    report_date_endVal="NULL";
-    validate = false;
-    errorMessage += "- Field report_date_start tidak boleh null <br>";
-    }else{
-    report_date_endVal="to_timestamp('"+report_date_end+"','YYYY-MM-DD HH24:MI')";    
-    }
     
     
   
@@ -89,10 +66,10 @@
                }else {
                    
                  sql = "update t_report_item_hide SET "
-                    +"report_id='"+report_id+"',"
-                    +"report_date_start="+report_date_startVal+", "
-                    +"report_date_end="+report_date_endVal+", "
-                    +"record_stat="+record_stat+" "
+//                    +"report_id='"+report_id+"',"
+//                    +"report_date_start="+report_date_startVal+", "
+//                    +"report_date_end="+report_date_endVal+", "
+//                    +"record_stat="+record_stat+" "
                     +" where id="+id;
                  
                  actionDesc="Edit";
@@ -141,7 +118,7 @@
         
         
     } else {
-        out.println("<div class=alert>" + errorMessage + "</div>");
+        out.println("<div class=alert></div>");
     }
 
     

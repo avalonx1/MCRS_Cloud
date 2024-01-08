@@ -96,4 +96,19 @@
         }
     });
     
+     $.ajax({
+        type: 'POST',
+        url: "audit/rpt_access_log/trace_rpt.jsp",
+        data: {id:<%=reportid%>},
+        success: function(data) {
+            $("#data_inner").empty();
+            $('#data_inner').html(data);
+            $("#data_inner").show();
+            $("#status_msg").delay(5000).hide(400);                
+        },
+        complete: function(){
+            $('#loading').hide();
+        }
+    });
+    
 </script>

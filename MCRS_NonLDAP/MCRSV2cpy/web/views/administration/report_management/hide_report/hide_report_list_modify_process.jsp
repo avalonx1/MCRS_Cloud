@@ -43,10 +43,7 @@
     report_date_endVal="to_timestamp('"+report_date_end+"','YYYY-MM-DD HH24:MI')";    
     }
     
-    
-  
- 
-    
+
     if (validate) {
         try {
             ResultSet resultSet=null;
@@ -59,15 +56,15 @@
                 
                if (actionCode.equals("ADD")) {
                    
-                     sql = "delete from t_report_item_hide where report_id="+report_id+" and report_date_start="+report_date_startVal+" "
+                    sql = "delete from t_report_item_hide where report_id="+report_id+" and report_date_start="+report_date_startVal+" "
                            + "and report_date_end="+report_date_endVal+" and record_stat="+record_stat+" ";
                        
                        db.executeUpdate(sql);
                        
-                sql = "insert into t_report_item_hide ("
-                    +"id, report_id, report_date_start,report_date_end,record_stat) "
-                    +"values (nextval('t_report_item_hide_seq'),"+report_id+","+report_date_startVal+","+report_date_endVal+","+record_stat+" )";
-                    
+                    sql = "insert into t_report_item_hide ("
+                        +"id, report_id, report_date_start,report_date_end,record_stat) "
+                        +"values (nextval('t_report_item_hide_seq'),"+report_id+","+report_date_startVal+","+report_date_endVal+","+record_stat+" )";
+
                 actionDesc="Add";
                         
                }else {
@@ -82,8 +79,7 @@
                  actionDesc="Edit";
                    
                }
-               
-               
+
                //debug mode            
                         if (v_debugMode.equals("1")) {
                         out.println("<div class=sql>"+sql+"</div>");

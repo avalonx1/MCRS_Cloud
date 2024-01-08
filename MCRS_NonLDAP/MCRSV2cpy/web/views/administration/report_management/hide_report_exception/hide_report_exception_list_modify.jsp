@@ -69,7 +69,7 @@
                                 
                                 
                                 id_ex = resultSet.getString("user_id");
-                                report_date_start = resultSet.getString("report_date_start");
+//                                report_date_start = resultSet.getString("report_date_start");
                                 report_date_end = resultSet.getString("report_date_end");
                                 record_stat = resultSet.getString("record_stat");
                                 
@@ -223,19 +223,6 @@
     });
 
 
-    $( "#report_date_start" ).change(function(){ 
-    
-                var dateRequested_yyyy = $("#report_date_start").val().substr(0,4);
-                var dateRequested_mm = $("#report_date_start").val().substr(5, 2);
-                var dateRequested_dd = $("#report_date_start").val().substr(8, 2);
-                var dateRequested_hh = $("#report_date_start").val().substr(11, 2);
-                var dateRequested_min = $("#report_date_start").val().substr(14, 2);
-                var dateFull=new Date(dateRequested_yyyy,dateRequested_mm-1,dateRequested_dd);
-                
-                $("#report_date_end").datetimepicker('option', 'minDate', dateFull);
-                
-                
-                 });
     
 
 
