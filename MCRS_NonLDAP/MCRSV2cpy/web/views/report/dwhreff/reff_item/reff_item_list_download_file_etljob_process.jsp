@@ -35,12 +35,11 @@
                         out.println("<div class=sql> execute DS Job :"+etljob_name+" ID:"+id+" </div>");
                         }
                 
-               //runjob Dwh Reff  
-                      auth runScriptReff = new auth(v_clientIP);
+               //runjob  
+                    auth runScript = new auth(v_clientIP);
                     try {
-                     runScriptReff.execRunDsJobReff(id,etljob_name);
-                     
-                     System.out.println(runScriptReff);
+                     runScript.execRunDsJob(id,etljob_name);
+                     System.out.println(runScript);
                      } catch (SQLException Sqlex) {
                      out.println("<div class=sql>" + Sqlex.getMessage() + "</div>");
                      } 
@@ -48,7 +47,7 @@
                      out.println("<div class=sql>" + ioex.getMessage() + "</div>");
                      }
                     finally {
-                     runScriptReff.close();
+                     runScript.close();
                      }
                     
                 out.println("<div class=info> Run ETL "+etljob_name+" ID "+id+" success..</div>");

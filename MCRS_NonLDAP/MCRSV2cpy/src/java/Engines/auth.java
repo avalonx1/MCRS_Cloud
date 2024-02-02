@@ -1,14 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
+//package WEB-INF.classes.Engines;
 package Engines;
 import java.sql.*;
 import javax.naming.NamingException;
-import Database.*;
+import Database.Database;
+//import Database.*;
 import java.io.IOException;
 import java.security.SecureRandom;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.naming.NamingException;
         
 
 /**
@@ -31,15 +32,11 @@ static SecureRandom rnd = new SecureRandom();
      * @throws NamingException
      * @throws SQLException
      */
-    public auth(String ip_addr) throws NamingException, SQLException{
-        if (ip_addr.equals("127.0.0.1")){
-            this.ipAddr="ADMIN";
-//            }else{
-//            this.ipAddr=ip_addr;
-            }
-        this.connect(1); 
-        
-    }
+    public auth(String ip_addr) throws NamingException, SQLException {
+    if (ip_addr.equals("127.0.0.1"))
+      this.ipAddr = "ADMIN"; 
+    connect(1);
+  }
     
     /**
      *
@@ -563,58 +560,66 @@ static SecureRandom rnd = new SecureRandom();
     }
       
     /**
-     *
+     * Hasemi Author
      * @param id
      * @throws SQLException
      * @throws NamingException
      * @throws IOException
      */
-    public void execRunDsJob(String id)throws SQLException,NamingException, IOException
-    {
-            
-            String runScript=getParamValue("RUNDSJOB_SCRIPT_JNRLADJ");
-            String runScriptRemote=getParamValue("RUNDSJOB_SCRIPT_JNRLADJ_DS");
-            String ENV=getParamValue("RUNDSJOB_ENV");
-            String JOBNAME=getParamValue("RUNDSJOB_JOBNAME_JNRLADJ");
-            String USERSSH=getParamValue("RUNDSJOB_USERSSH");
-            String PWDSSH=getParamValue("RUNDSJOB_PWDSSH");
-            String HOSTSSH=getParamValue("RUNDSJOB_HOSTSSH");
-            
-                    
-            String unixCommand = "sh "+runScript+" "+USERSSH+" "+PWDSSH+" "+HOSTSSH+" "+id+" "+ENV+" "+JOBNAME+" "+runScriptRemote;
-
-            Runtime rt = Runtime.getRuntime();
-            rt.exec(unixCommand);
-            System.out.println("Linux Command executed "+ipAddr+" :  "+unixCommand);
-
-            
+    
+     public void execRunDsJobDWH(String id) throws SQLException, NamingException, IOException {
+        String runScript = getParamValue("RUNDSJOB_SCRIPT_DWH_REFF");
+        String runScriptRemote = getParamValue("RUNDSJOB_SCRIPT_DWHREFF_DS");
+        String ENV = getParamValue("RUNDSJOB_ENV");
+        String JOBNAME = getParamValue("RUNDSJOB_JOBNAME_JNRLADJ");
+        String USERSSH = getParamValue("RUNDSJOB_USERSSH");
+        String PWDSSH = getParamValue("RUNDSJOB_PWDSSH");
+        String HOSTSSH = getParamValue("RUNDSJOB_HOSTSSH");
+        String unixCommand = "sh " + runScript + " " + USERSSH + " " + PWDSSH + " " + HOSTSSH + " " + id + " " + ENV + " " + JOBNAME + " " + runScriptRemote;
+        Runtime rt = Runtime.getRuntime();
+        rt.exec(unixCommand);
+        System.out.println("Linux execRunDsJobDWH1 Command executed " + this.ipAddr + " :  " + unixCommand);
     }
-       
-    /**
-     *
-     * @param id
-     * @param JOBNAME
-     * @throws SQLException
-     * @throws NamingException
-     * @throws IOException
-     */
-    public void execRunDsJob(String id,String JOBNAME)throws SQLException,NamingException, IOException
-    {
-            
-            String runScript=getParamValue("RUNDSJOB_SCRIPT_JNRLADJ");
-            String runScriptRemote=getParamValue("RUNDSJOB_SCRIPT_JNRLADJ_DS");
-            String ENV=getParamValue("RUNDSJOB_ENV");
-            String USERSSH=getParamValue("RUNDSJOB_USERSSH");
-            String PWDSSH=getParamValue("RUNDSJOB_PWDSSH");
-            String HOSTSSH=getParamValue("RUNDSJOB_HOSTSSH");
-            
-                    
-            String unixCommand = "sh "+runScript+" "+USERSSH+" "+PWDSSH+" "+HOSTSSH+" "+id+" "+ENV+" "+JOBNAME+" "+runScriptRemote;
-            Runtime rt = Runtime.getRuntime();
-            rt.exec(unixCommand);
-            System.out.println("Linux Command executed "+ipAddr+" :  "+unixCommand);
-
-            
+     
+     public void execRunDsJobDWH(String id, String JOBNAME) throws SQLException, NamingException, IOException {
+        String runScript = getParamValue("RUNDSJOB_SCRIPT_DWH_REFF");
+        String runScriptRemote = getParamValue("RUNDSJOB_SCRIPT_DWHREFF_DS");
+        String ENV = getParamValue("RUNDSJOB_ENV");
+        String USERSSH = getParamValue("RUNDSJOB_USERSSH");
+        String PWDSSH = getParamValue("RUNDSJOB_PWDSSH");
+        String HOSTSSH = getParamValue("RUNDSJOB_HOSTSSH");
+        String unixCommand = "sh " + runScript + " " + USERSSH + " " + PWDSSH + " " + HOSTSSH + " " + id + " " + ENV + " " + JOBNAME + " " + runScriptRemote;
+        Runtime rt = Runtime.getRuntime();
+        rt.exec(unixCommand);
+        System.out.println("Linux execRunDsJobDWH2 Command executed " + this.ipAddr + " :  " + unixCommand);
+    } 
+     
+    
+    public void execRunDsJob(String id) throws SQLException, NamingException, IOException {
+        String runScript = getParamValue("RUNDSJOB_SCRIPT_JNRLADJ");
+        String runScriptRemote = getParamValue("RUNDSJOB_SCRIPT_JNRLADJ_DS");
+        String ENV = getParamValue("RUNDSJOB_ENV");
+        String JOBNAME = getParamValue("RUNDSJOB_JOBNAME_JNRLADJ");
+        String USERSSH = getParamValue("RUNDSJOB_USERSSH");
+        String PWDSSH = getParamValue("RUNDSJOB_PWDSSH");
+        String HOSTSSH = getParamValue("RUNDSJOB_HOSTSSH");
+        String unixCommand = "sh " + runScript + " " + USERSSH + " " + PWDSSH + " " + HOSTSSH + " " + id + " " + ENV + " " + JOBNAME + " " + runScriptRemote;
+        Runtime rt = Runtime.getRuntime();
+        rt.exec(unixCommand);
+        System.out.println("Linux execRunDsJob1 Command executed " + this.ipAddr + " :  " + unixCommand);
+    }
+  
+  public void execRunDsJob(String id, String JOBNAME) throws SQLException, NamingException, IOException {
+        String runScript = getParamValue("RUNDSJOB_SCRIPT_JNRLADJ");
+        String runScriptRemote = getParamValue("RUNDSJOB_SCRIPT_JNRLADJ_DS");
+        String ENV = getParamValue("RUNDSJOB_ENV");
+        String USERSSH = getParamValue("RUNDSJOB_USERSSH");
+        String PWDSSH = getParamValue("RUNDSJOB_PWDSSH");
+        String HOSTSSH = getParamValue("RUNDSJOB_HOSTSSH");
+        String unixCommand = "sh " + runScript + " " + USERSSH + " " + PWDSSH + " " + HOSTSSH + " " + id + " " + ENV + " " + JOBNAME + " " + runScriptRemote;
+        Runtime rt = Runtime.getRuntime();
+        rt.exec(unixCommand);
+        System.out.println("Linux execRunDsJob2 Command executed " + this.ipAddr + " :  " + unixCommand);
     }
      
     /**

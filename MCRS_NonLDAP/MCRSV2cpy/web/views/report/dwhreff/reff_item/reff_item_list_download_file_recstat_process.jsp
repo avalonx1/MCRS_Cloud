@@ -48,11 +48,11 @@
                         }
                         
                 
-                 String execRunDsJobReff="";
+                 String execRunDsJobDWH=""; 
                  auth runScriptReff = new auth(v_clientIP);
                     try { 
 
-                     execRunDsJobReff=runScriptReff.execDeleteFile(filename); 
+                     execRunDsJobDWH=runScriptReff.execDeleteFile(filename); 
 
                      } catch (SQLException Sqlex) {
                      out.println("<div class=sql>" + Sqlex.getMessage() + "</div>");

@@ -8,12 +8,13 @@
          String v_userID = (String) session.getAttribute("session_userid"); 
 //         String v_userID = "session_userid"; 
 
-
-        String path = request.getContextPath();
-        String getProtocol=request.getScheme();
-        String getDomain=request.getServerName();
-        String getPort=Integer.toString(request.getServerPort());
-        String getPath = getProtocol+"://"+getDomain+":"+getPort+path;
+         
+         
+  String path = request.getContextPath();
+  String getProtocol=request.getScheme();
+  String getDomain=request.getServerName();
+  String getPort=Integer.toString(request.getServerPort());
+  String getPath = getProtocol+"://"+getDomain+":"+getPort+path;
   
   
          String v_urlID="";
@@ -102,7 +103,7 @@
     if ((String) session.getAttribute("session_username") == null && 
 (String) session.getAttribute("session_password") == null && (String) session.getAttribute("session_level") == null) {
 //        response.sendRedirect("../login.jsp");
-response.sendRedirect("index.jsp");
+response.sendRedirect("index.jsp?menuid=1");
     } else if ((String) session.getAttribute("session_username") != null) {
         
         String userid = (String) session.getAttribute("session_userid");
@@ -118,8 +119,7 @@ response.sendRedirect("index.jsp");
         String url = "";
         if (group.equals("1")) {
             url = "welcome.jsp";
-        } 
-            else {
+        } else {
             url = "welcome.jsp";
         }
 
@@ -152,7 +152,7 @@ response.sendRedirect("index.jsp");
                                             + " group by modul,c.name,c.inorder "
                                             + "order by c.inorder,modul,c.name ";
                                                
-                                   System.out.println("### Select view index.jsp T_USER = "+sql);
+                                   System.out.println(sql);
                                    
                                     resultSet = db.executeQuery(sql);
                                     
@@ -163,8 +163,7 @@ response.sendRedirect("index.jsp");
                                         
                                             if (modul_id.equalsIgnoreCase(resultSet.getString("modul"))) {
                                             TabMenu+="<li class=\"navleft active\"><a href=\"index.jsp?menuid="+resultSet.getString(1)+"\">"+resultSet.getString(2)+"</a></li>";
-                                            }
-                                            else{
+                                            }else{
                                             TabMenu+="<li class=\"navleft\"><a href=\"index.jsp?menuid="+resultSet.getString(1)+"\">"+resultSet.getString(2)+"</a></li>";
                                             }
                                         }

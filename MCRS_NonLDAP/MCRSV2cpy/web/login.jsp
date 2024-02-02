@@ -93,17 +93,14 @@ if (statSession==null) {
                                                 
                                                 if (resultSet.getString("FLAG").equals("1")) {
                                                     stat_in=3;
-//                                                
+                                              
                                                     boolean isEligibleLdap = true;
 //                                                    String errCode = "";
-//                                                    
-//                                                      
-//   
+ 
                                                     ldapActiveDirectory ldap = new ldapActiveDirectory(v_clientIP);
-////                                                    String username="20131254";
-////                                                    String password="Password*3";
-//        
-//                                                    
+//                                                    String username="20131254";
+//                                                    String password="Password*3";
+                                                    
 //                                                    ldapActiveDirectory ldap = new ldapActiveDirectory();
                                                     ldap.getName(username);
                                                     ldap.getEmail(username);
@@ -115,7 +112,7 @@ if (statSession==null) {
                                                         String AttrEmail="";
                                                         String AttrTitle="";
                                                         String AttrIPPhone="";
-//
+
                                                         if (isEligibleLdap) {
                                                             stat_in=3;
                                                              
