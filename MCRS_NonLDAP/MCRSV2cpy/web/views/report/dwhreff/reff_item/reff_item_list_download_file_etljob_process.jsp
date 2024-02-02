@@ -38,7 +38,7 @@
                //runjob  
                     auth runScript = new auth(v_clientIP);
                     try {
-                     runScript.execRunDsJob(id,etljob_name);
+                     runScript.execRunDsJobDWH(id,etljob_name);
                      System.out.println(runScript);
                      } catch (SQLException Sqlex) {
                      out.println("<div class=sql>" + Sqlex.getMessage() + "</div>");
